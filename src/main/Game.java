@@ -3,6 +3,7 @@ package main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -13,6 +14,10 @@ public class Game extends JFrame {
 
     private BufferedImage img;
 
+
+
+
+
     public Game() {
 
         importImg();
@@ -21,9 +26,11 @@ public class Game extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        screen = new GameScreen();
+        screen = new GameScreen(img);
         add(screen);
     }
+
+
 
     private void importImg() {
 
