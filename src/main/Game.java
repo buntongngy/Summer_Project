@@ -13,15 +13,20 @@ public class Game extends JFrame {
     private GameScreen screen;
 
     private BufferedImage img;
+    private double timePerFrame;
+    private long lastFrame;
+    private double timerPerUpdate;
+    private long lastUpdate;
 
-
-
+    private int update;
+    private long lastTimeUpdate;
 
 
     public Game() {
 
         importImg();
-
+        timePerFrame = 1000000000.0 /120.0;
+        timerPerUpdate = 1000000000.0 / 60.0;
         setSize(640, 640);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,8 +49,42 @@ public class Game extends JFrame {
 
     }
 
+    private void loopGame() {
+
+        while (true) {
+
+            if (System.nanoTime() - lastUpdate >= timerPerUpdate) {
+                updateGame();
+
+                callFPS();
+            }
+
+            if (System.nanoTime() - lastFrame >= timePerFrame) {
+                lastFrame = System.nanoTime();
+                repaint();
+            } else {
+
+            }
+        }
+    }
+
+    private void callFPS() {
+        if (System.currentTimeMillis() - lastTimeUpdate >=  1000) {
+            System.out.println("Update: " + update);
+            update = 0;
+            lastTimeUpdate = System.currentTimeMillis();
+        }
+    }
+
+    public void updateGame() {
+        update++;
+        lastUpdate = System.nanoTime();
+        System.out.println("Game has update");
+    }
+
     public static void main(String[] args) {
 
         Game game = new Game();
+        game.loopGame();
     }
 }
