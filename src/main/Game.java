@@ -32,12 +32,9 @@ public class Game extends JFrame implements Runnable {
 
     public Game() {
 
-        importImg();
-
-        
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        screen = new GameScreen(img);
+        screen = new GameScreen(this);
         add(screen);
 
         pack();
@@ -55,17 +52,7 @@ public class Game extends JFrame implements Runnable {
         requestFocus();
     }
 
-    private void importImg() {
 
-        InputStream is = getClass().getResourceAsStream("/TD_sheet.png");
-
-        try {
-            img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void start() {
         gameThread = new Thread(this) {};
