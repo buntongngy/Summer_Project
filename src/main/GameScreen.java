@@ -1,7 +1,6 @@
 package main;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
@@ -12,17 +11,15 @@ public class GameScreen extends JPanel {
 
     private Random random;
     private BufferedImage img;
+    private Dimension size;
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
-    private long lastTime;
-    private int fps;
-
-
 
     public GameScreen(BufferedImage img) {
         this.img = img;
+
+        setPanelSize();
         loadSprites();
         random = new Random();
-
 
     }
 
@@ -32,6 +29,15 @@ public class GameScreen extends JPanel {
                 sprites.add(img.getSubimage(x*32,y*32,32,32));
             }
         }
+    }
+
+    public void setPanelSize() {
+        size = new Dimension(640, 640);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
+
+
     }
 
     public void paintComponent(Graphics g) {
@@ -46,21 +52,8 @@ public class GameScreen extends JPanel {
                 g.drawImage(sprites.get(getRanInt()),x*32,y*32, null);
             }
         }
-
-        callFPS();
-
     }
 
-    private void callFPS() {
-        fps++;
-        if(System.currentTimeMillis() - lastTime >= 1000) {
-            System.out.println("FPS: " + fps);
-            fps = 0;
-            lastTime = System.currentTimeMillis();
-
-        }
-
-    }
 
     private int getRanInt(){
         return random.nextInt(20);
