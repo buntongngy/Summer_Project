@@ -1,5 +1,8 @@
 package main;
 
+import input.myKeyListener;
+import input.myMouseListener;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,12 +23,17 @@ public class Game extends JFrame implements Runnable {
     private int update;
     private long lastTimeUpdate;
 
+    private myMouseListener myMouseListener;
+    private myKeyListener myKeyListener;
+
+
     private Thread gameThread;
 
 
     public Game() {
 
         importImg();
+
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -34,6 +42,17 @@ public class Game extends JFrame implements Runnable {
 
         pack();
         setVisible(true);
+    }
+
+    private void initInput() {
+        myMouseListener = new myMouseListener();
+        myKeyListener = new myKeyListener();
+
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(myKeyListener);
+
+        requestFocus();
     }
 
     private void importImg() {
@@ -68,6 +87,7 @@ public class Game extends JFrame implements Runnable {
     public static void main(String[] args) {
 
         Game game = new Game();
+        game.initInput();
         game.start();
 
     }
