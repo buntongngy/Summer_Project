@@ -2,8 +2,8 @@ package main;
 
 public enum GameState {
 
-    PLAYING, NEW, SETTINGS;
+    PLAYING, MENU, SETTINGS;
 
-    public static GameState gameState = NEW;
+    public static GameState gameState = MENU;
 
 }
