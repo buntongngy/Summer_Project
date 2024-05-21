@@ -18,8 +18,6 @@ public class Game extends JFrame implements Runnable {
 
     private GameScreen screen;
 
-    private BufferedImage img;
-
     private final double FPS_Set = 120.0;
     private final double UPS_Set = 60.0;
 

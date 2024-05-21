@@ -1,5 +1,6 @@
 package manager;
 
+import helperPackage.LoadedSave;
 import objects.Tile;
 
 import java.awt.image.BufferedImage;
@@ -20,13 +21,14 @@ public class TileManager {
 
     private void createTiles() {
 
-        tiles.add(GRASS = new Tile(getSprite(10,0)));
+        tiles.add(GRASS = new Tile(getSprite(9,0)));
         tiles.add(WATER = new Tile(getSprite(1,0)));
-        tiles.add(ROAD = new Tile(getSprite(9,0)));
+        tiles.add(ROAD = new Tile(getSprite(8,0)));
 
     }
 
     private void loadAtlas() {
+        atlas = LoadedSave.getSpriteAtlas();
     }
 
     public BufferedImage getSprite(int id) {
@@ -34,6 +36,6 @@ public class TileManager {
     }
 
     private BufferedImage getSprite(int xCord, int yCord) {
-        return atlas.getSubimage(xCord * 32, yCord *32, 32,32 );
+        return atlas.getSubimage(xCord * 32, yCord * 32, 10,32);
     }
 }

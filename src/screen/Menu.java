@@ -1,5 +1,6 @@
 package screen;
 
+import helperPackage.LoadedSave;
 import main.Game;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,9 @@ public class Menu extends GameScreen implements ScreenMethods{
     public Menu(Game game) {
         super(game);
         random = new Random();
-        importImg();
+
+        img = LoadedSave.getSpriteAtlas();
+
         loadSprites();
     }
 
@@ -41,17 +44,6 @@ public class Menu extends GameScreen implements ScreenMethods{
         }
     }
 
-    private void importImg() {
-
-        InputStream is = getClass().getResourceAsStream("/TD_sheet.png");
-
-        try {
-            img = ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private int getRanInt(){
         return random.nextInt(20);
