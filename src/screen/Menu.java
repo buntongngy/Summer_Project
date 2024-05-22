@@ -2,6 +2,7 @@ package screen;
 
 import helperPackage.LoadedSave;
 import main.Game;
+import ui.buttonClass;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,24 +18,34 @@ public class Menu extends GameScreen implements ScreenMethods{
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private BufferedImage img;
     private Random random;
+    private buttonClass bPlay, bSetting, bQuit;
 
     public Menu(Game game) {
         super(game);
         random = new Random();
-
         img = LoadedSave.getSpriteAtlas();
-
         loadSprites();
+        initButtons();
     }
 
     @Override
     public void render(Graphics g) {
-        for (int y = 0; y < 20; y++) {
-            for (int x = 0; x < 20; x++) {
-                g.drawImage(sprites.get(getRanInt()),x*32,y*32, null);
-            }
-        }
+
+        drawButton(g);
+
     }
+
+
+    private void initButtons() {
+        bPlay = new buttonClass("Play", 100, 100, 100, 30);
+    }
+
+    private void drawButton(Graphics g) {
+        bPlay.draw(g);
+    }
+
+
+
 
     private void loadSprites() {
         for (int y=0; y<3; y++) {
