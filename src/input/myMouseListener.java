@@ -1,17 +1,24 @@
 package input;
 
+import main.Game;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class myMouseListener implements MouseListener, MouseMotionListener {
+
+    private Game game;
+
+    public myMouseListener(Game game) {
+        this.game = game;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON1) {
-           System.out.println("Click");
-        } else if (e.getButton() == MouseEvent.BUTTON3) {
-            System.out.println("Not click");
-        }
+       if (e.getButton() == MouseEvent.BUTTON1) {
+           System.out.println("Mouse Pos: " + e.getX() + " : " + e.getY());
+       }
     }
 
     @Override
