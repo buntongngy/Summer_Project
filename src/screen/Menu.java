@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
-
+import static main.GameState.*;
 
 public class Menu extends GameScreen implements ScreenMethods{
 
@@ -33,6 +33,29 @@ public class Menu extends GameScreen implements ScreenMethods{
 
         drawButton(g);
 
+    }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+
+        if (bPlay.getBounds().contains(x, y)) {
+            setGameState(PLAYING);
+        }
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+        if (bPlay.getBounds().contains(x, y)) {
+            bPlay.setMouseOver(true);
+        }
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+        if (bPlay.getBounds().contains(x, y)) {
+            bPlay.setMousePress(true);
+        }
     }
 
 

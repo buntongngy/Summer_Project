@@ -31,4 +31,19 @@ public class Playing extends GameScreen implements ScreenMethods {
         }
 
     }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+
+    }
 }
