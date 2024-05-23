@@ -40,14 +40,26 @@ public class Menu extends GameScreen implements ScreenMethods{
 
         if (bPlay.getBounds().contains(x, y)) {
             setGameState(PLAYING);
+        } else if(bSetting.getBounds().contains(x, y)) {
+            setGameState(SETTINGS);
+        } else if (bQuit.getBounds().contains(x, y)) {
+            System.exit(0);
         }
 
     }
 
     @Override
     public void mouseMoved(int x, int y) {
+        bPlay.setMouseOver(false);
+        bSetting.setMouseOver(false);
+        bQuit.setMouseOver(false);
+
         if (bPlay.getBounds().contains(x, y)) {
             bPlay.setMouseOver(true);
+        } else if(bSetting.getBounds().contains(x, y)) {
+            bSetting.setMouseOver(true);
+        } else if (bQuit.getBounds().contains(x, y)) {
+            bQuit.setMouseOver(true);
         }
     }
 
@@ -55,16 +67,44 @@ public class Menu extends GameScreen implements ScreenMethods{
     public void mousePressed(int x, int y) {
         if (bPlay.getBounds().contains(x, y)) {
             bPlay.setMousePress(true);
+        } else if(bSetting.getBounds().contains(x, y)) {
+            bSetting.setMousePress(true);
+        } else if (bQuit.getBounds().contains(x, y)) {
+            bQuit.setMousePress(true);
         }
+
+    }
+
+    @Override
+    public void mouseRelease(int x, int y) {
+        resetBtn();
+    }
+
+    public void resetBtn() {
+       bPlay.resetBoolean();
+       bSetting.resetBoolean();
+       bQuit.resetBoolean();
     }
 
 
     private void initButtons() {
-        bPlay = new buttonClass("Play", 100, 100, 100, 30);
+
+        int w = 150;
+        int h = w/3;
+        int x = 640/2 - w/2;
+        int y = 150;
+        int yOffset = 100;
+
+        bPlay = new buttonClass("Play", x, y, w, h);
+        bSetting = new buttonClass("Setting", x, y + yOffset, w, h);
+        bQuit = new buttonClass("Quit", x, y+2 * yOffset, w, h);
+
     }
 
     private void drawButton(Graphics g) {
         bPlay.draw(g);
+        bSetting.draw(g);
+        bQuit.draw(g);
     }
 
 

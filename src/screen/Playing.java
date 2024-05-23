@@ -6,10 +6,14 @@ import manager.TileManager;
 
 import java.awt.*;
 
+import static main.GameState.PLAYING;
+import static main.GameState.setGameState;
+
 public class Playing extends GameScreen implements ScreenMethods {
 
     private int[][] lvl;
     private TileManager tileManager;
+
 
     public Playing(Game game) {
         super(game);
@@ -44,6 +48,11 @@ public class Playing extends GameScreen implements ScreenMethods {
 
     @Override
     public void mousePressed(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseRelease(int x, int y) {
 
     }
 }

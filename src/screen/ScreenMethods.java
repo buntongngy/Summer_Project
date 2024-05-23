@@ -8,5 +8,6 @@ public interface ScreenMethods {
     public void mouseClicked(int x, int y);
     public void mouseMoved(int x, int y);
     public void mousePressed(int x, int y);
+    public void mouseRelease(int x, int y);
 
 }

@@ -29,4 +29,9 @@ public class Setting extends GameScreen implements ScreenMethods{
     public void mousePressed(int x, int y) {
 
     }
+
+    @Override
+    public void mouseRelease(int x, int y) {
+
+    }
 }

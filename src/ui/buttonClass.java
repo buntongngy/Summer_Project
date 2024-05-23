@@ -56,6 +56,11 @@ public class buttonClass {
         g.drawString(text , x - w/2 + width/2, y+ h/2 + height/2);
     }
 
+    public void resetBoolean() {
+        this.mousePress = false;
+        this.mouseOver = false;
+    }
+
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
     }
