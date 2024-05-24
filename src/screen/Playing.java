@@ -21,7 +21,7 @@ public class Playing extends GameScreen implements ScreenMethods {
 
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
-        bottomBar = new bottomBar(0, 640, 640, 100);
+        bottomBar = new bottomBar(0, 640, 640, 100, this);
     }
 
     @Override
@@ -34,29 +34,38 @@ public class Playing extends GameScreen implements ScreenMethods {
             }
 
         }
-
-
         bottomBar.draw(g);
+    }
 
+    public TileManager getTileManager() {
+        return tileManager;
     }
 
     @Override
     public void mouseClicked(int x, int y) {
-
+        if (y>=640) {
+            bottomBar.mouseMoved(x, y);
+        }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
-
+        if (y>=640) {
+            bottomBar.mouseMoved(x, y);
+        }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-
+        if (y>=640) {
+            bottomBar.mouseMoved(x, y);
+        }
     }
 
     @Override
     public void mouseRelease(int x, int y) {
+
+            bottomBar.mouseMoved(x, y);
 
     }
 }

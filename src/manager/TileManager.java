@@ -23,7 +23,7 @@ public class TileManager {
 
         tiles.add(GRASS = new Tile(getSprite(9,0)));
         tiles.add(WATER = new Tile(getSprite(1,0)));
-        tiles.add(ROAD = new Tile(getSprite(7,0)));
+        tiles.add(ROAD = new Tile(getSprite(8,0)));
 
     }
 
