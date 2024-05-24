@@ -3,6 +3,7 @@ package screen;
 import helperPackage.LevelBuild;
 import main.Game;
 import manager.TileManager;
+import ui.bottomBar;
 
 import java.awt.*;
 
@@ -13,14 +14,14 @@ public class Playing extends GameScreen implements ScreenMethods {
 
     private int[][] lvl;
     private TileManager tileManager;
-
+    private bottomBar bottomBar;
 
     public Playing(Game game) {
         super(game);
 
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
-
+        bottomBar = new bottomBar(0, 640, 640, 100);
     }
 
     @Override
@@ -33,6 +34,9 @@ public class Playing extends GameScreen implements ScreenMethods {
             }
 
         }
+
+
+        bottomBar.draw(g);
 
     }
 
