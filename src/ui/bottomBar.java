@@ -4,6 +4,7 @@ import objects.Tile;
 import screen.Playing;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import static main.GameState.MENU;
@@ -29,18 +30,30 @@ public class bottomBar {
     private void initButton() {
         bMenu = new buttonClass("Menu", 2, 642, 100, 30);
 
-        for (int i = 0; i<10; i++) {
-
-        }
+        int w = 50;
+        int h = 50;
+        int xStart = 100;
+        int yStart = 640;
+        int xOffset = (int)(w*1.1);
+        int i =0;
 
         for (Tile tile : playing.getTileManager().tiles) {
-            tileBtn.add(new buttonClass("", x, y, width, height));
+            tileBtn.add(new buttonClass(tile.getName(), xStart + xOffset * i, yStart, w, h, i));
+            i++;
         }
 
     }
 
     private void drawBtn(Graphics g) {
         bMenu.draw(g);
+        drawTileBtn(g);
+
+    }
+
+    private void drawTileBtn(Graphics g) {
+        for (buttonClass b: tileBtn) {
+            g.drawImage(getBtnImg(b.getId()), b.x, b.y, b.width, b.height, null);
+        }
     }
 
     public void draw(Graphics g) {
@@ -50,6 +63,10 @@ public class bottomBar {
         g.fillRect(x, y, width, height);
 
         drawBtn(g);
+    }
+
+    public BufferedImage getBtnImg(int id) {
+        return playing.getTileManager().getSprite(id);
     }
 
     public void mouseClicked(int x, int y) {

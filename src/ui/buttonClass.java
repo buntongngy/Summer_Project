@@ -4,20 +4,32 @@ import java.awt.*;
 
 public class buttonClass {
 
-    private int x, y, width, height;
+    public int x, y, width, height, id;
     private String text;
 
     private Rectangle bounds;
     private Boolean mouseOver = false;
     private Boolean mousePress = false;
 
-
+    //For normal Btn
     public buttonClass(String text, int x, int y, int width, int height) {
         this.text = text;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.id = -1;
+        initBound();
+    }
+
+    //For tile Btn
+    public buttonClass(String text, int x, int y, int width, int height, int id) {
+        this.text = text;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.id = id;
         initBound();
     }
 
@@ -76,6 +88,10 @@ public class buttonClass {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public int getId() {
+        return id;
     }
 
 }
