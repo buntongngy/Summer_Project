@@ -3,6 +3,7 @@ package screen;
 import helperPackage.LevelBuild;
 import main.Game;
 import manager.TileManager;
+import objects.Tile;
 import ui.bottomBar;
 
 import java.awt.*;
@@ -15,6 +16,10 @@ public class Playing extends GameScreen implements ScreenMethods {
     private int[][] lvl;
     private TileManager tileManager;
     private bottomBar bottomBar;
+    private Tile selectedTile;
+    private int mouseX, mouseY;
+    private boolean drawSelect = false;
+
 
     public Playing(Game game) {
         super(game);
@@ -35,6 +40,18 @@ public class Playing extends GameScreen implements ScreenMethods {
 
         }
         bottomBar.draw(g);
+        drawSelectTile(g);
+    }
+
+    public void drawSelectTile(Graphics g){
+        if (selectedTile != null && drawSelect) {
+            g.drawImage(selectedTile.getSprite(), mouseX , mouseY, 32, 32, null);
+        }
+    }
+
+    public void setSelectedTile(Tile tile) {
+        this.selectedTile = tile;
+        drawSelect = true;
     }
 
     public TileManager getTileManager() {
@@ -44,7 +61,7 @@ public class Playing extends GameScreen implements ScreenMethods {
     @Override
     public void mouseClicked(int x, int y) {
         if (y>=640) {
-            bottomBar.mouseMoved(x, y);
+            bottomBar.mouseClicked(x, y);
         }
     }
 
@@ -52,20 +69,25 @@ public class Playing extends GameScreen implements ScreenMethods {
     public void mouseMoved(int x, int y) {
         if (y>=640) {
             bottomBar.mouseMoved(x, y);
+            drawSelect = false;
+        } else {
+            drawSelect = true;
+            mouseX = x;
+            mouseY = y;
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
         if (y>=640) {
-            bottomBar.mouseMoved(x, y);
+            bottomBar.mousePressed(x, y);
         }
     }
 
     @Override
     public void mouseRelease(int x, int y) {
 
-            bottomBar.mouseMoved(x, y);
+            bottomBar.mouseRelease(x, y);
 
     }
 }
