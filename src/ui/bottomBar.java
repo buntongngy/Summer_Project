@@ -52,7 +52,31 @@ public class bottomBar {
 
     private void drawTileBtn(Graphics g) {
         for (buttonClass b: tileBtn) {
+
+            //Image sprite
             g.drawImage(getBtnImg(b.getId()), b.x, b.y, b.width, b.height, null);
+
+
+            //Mouse Over
+            if(b.isMouseOver()) {
+                g.setColor(Color.GREEN);
+            } else {
+                g.setColor(Color.YELLOW);
+            }
+
+            //Border
+
+            g.drawRect(b.x,b.y,b.width,b.height);
+
+
+
+            //Mouse Press
+
+            if (b.isMousePress()) {
+                g.drawRect(b.x+1,b.y+1,b.width-2,b.height-2);
+                g.drawRect(b.x+2,b.y+2,b.width-4,b.height-4);
+
+            }
         }
     }
 
@@ -77,19 +101,41 @@ public class bottomBar {
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
+
+        for (buttonClass b: tileBtn)
+            b.setMousePress(false);
+
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMouseOver(true);
+        } else {
+            for (buttonClass b: tileBtn) {
+                if(b.getBounds().contains(x, y)) {
+                    b.setMouseOver(true);
+                    return;
+                }
+
+            }
         }
     }
 
     public void mousePressed(int x, int y) {
         if (bMenu.getBounds().contains(x, y)) {
             bMenu.setMousePress(true);
+        } else {
+            for (buttonClass b: tileBtn) {
+                if(b.getBounds().contains(x,y)) {
+                    b.setMousePress(true);
+                    return;
+                }
+            }
         }
     }
 
     public void mouseRelease(int x, int y) {
         bMenu.resetBoolean();
+        for (buttonClass b: tileBtn) {
+            b.resetBoolean();
+        }
     }
 
 }
