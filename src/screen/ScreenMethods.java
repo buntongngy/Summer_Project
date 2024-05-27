@@ -9,5 +9,6 @@ public interface ScreenMethods {
     public void mouseMoved(int x, int y);
     public void mousePressed(int x, int y);
     public void mouseRelease(int x, int y);
+    public void mouseDragged(int x, int y);
 
 }

@@ -80,6 +80,11 @@ public class Menu extends GameScreen implements ScreenMethods{
         resetBtn();
     }
 
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
+
     public void resetBtn() {
        bPlay.resetBoolean();
        bSetting.resetBoolean();
