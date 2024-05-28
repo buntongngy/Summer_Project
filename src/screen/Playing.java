@@ -1,6 +1,7 @@
 package screen;
 
 import helperPackage.LevelBuild;
+import helperPackage.LoadedSave;
 import main.Game;
 import manager.TileManager;
 import objects.Tile;
@@ -27,6 +28,21 @@ public class Playing extends GameScreen implements ScreenMethods {
         lvl = LevelBuild.getLevelData();
         tileManager = new TileManager();
         bottomBar = new bottomBar(0, 640, 640, 100, this);
+
+       // LoadedSave.createFile();
+       // LoadedSave.writeToFile();
+       // LoadedSave.readFromFile();
+
+        createDefaultLvl();
+    }
+
+    private void createDefaultLvl() {
+        int[] arr = new int[400];
+        for(int i = 0; i<arr.length; i++) {
+            arr[i] = 0;
+
+        }
+        LoadedSave.createLevel("new level", arr);
     }
 
     @Override
