@@ -71,6 +71,10 @@ public class Playing extends GameScreen implements ScreenMethods {
         drawSelectTile(g);
     }
 
+    public void saveLevel() {
+        LoadedSave.saveLevel("new level", lvl);
+    }
+
     public void drawSelectTile(Graphics g) {
         if (selectedTile != null && drawSelect) {
             g.drawImage(selectedTile.getSprite(), mouseX, mouseY, 32, 32, null);

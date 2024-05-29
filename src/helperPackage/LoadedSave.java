@@ -56,6 +56,17 @@ public class LoadedSave {
         }
     }
 
+    public static void saveLevel(String name, int[][] idArr) {
+        File lvlFile = new File("res/" + name + ".txt");
+
+        if(lvlFile.exists()) {
+            writeToFile(lvlFile, Utliz.twoDto1DArr(idArr));
+        } else {
+            System.out.println("File " + name + "does not exist!");
+            return;
+        }
+    }
+
     private static ArrayList<Integer> readFromFile(File file) {
         ArrayList<Integer> list = new ArrayList<>();
         try (Scanner sc = new Scanner(file)) {
