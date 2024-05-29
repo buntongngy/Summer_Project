@@ -29,25 +29,39 @@ public class Playing extends GameScreen implements ScreenMethods {
         tileManager = new TileManager();
         bottomBar = new bottomBar(0, 640, 640, 100, this);
 
-       // LoadedSave.createFile();
-       // LoadedSave.writeToFile();
-       // LoadedSave.readFromFile();
-
         createDefaultLvl();
+        loadDefaultLvl();
+
+        // Check if the level data is still null after loading
+        if (lvl == null) {
+            System.err.println("Level data is null after initialization. Initializing with default empty data.");
+            lvl = new int[20][20]; // Initialize with default empty level data
+        }
+    }
+
+    private void loadDefaultLvl() {
+        lvl = LoadedSave.getLevelData("new level");
+        if (lvl == null) {
+            System.err.println("Failed to load default level data.");
+        }
     }
 
     private void createDefaultLvl() {
-        int[] arr = new int[400];
-        for(int i = 0; i<arr.length; i++) {
+        int[] arr = new int[400]; // 20x20 level with all tiles set to 0
+        for (int i = 0; i < arr.length; i++) {
             arr[i] = 0;
-
         }
         LoadedSave.createLevel("new level", arr);
     }
 
     @Override
     public void render(Graphics g) {
-        for(int y = 0; y < lvl.length; y++) {
+        if (lvl == null) {
+            System.err.println("Level data is null, cannot render");
+            return; // Prevent further rendering logic if lvl is null
+        }
+
+        for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
                 g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
@@ -57,7 +71,7 @@ public class Playing extends GameScreen implements ScreenMethods {
         drawSelectTile(g);
     }
 
-    public void drawSelectTile(Graphics g){
+    public void drawSelectTile(Graphics g) {
         if (selectedTile != null && drawSelect) {
             g.drawImage(selectedTile.getSprite(), mouseX, mouseY, 32, 32, null);
         }
@@ -82,21 +96,20 @@ public class Playing extends GameScreen implements ScreenMethods {
     }
 
     private void changeTile(int x, int y) {
-
         if (selectedTile != null) {
+            int tileX = x / 32;
+            int tileY = y / 32;
 
-        int tileX = x / 32;
-        int tileY = y / 32;
+            if (lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId()) {
+                return;
+            }
 
-        if (lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId()) {
-            return;
+            lastTileY = tileY;
+            lastTileX = tileX;
+            lastTileId = selectedTile.getId();
+
+            lvl[tileY][tileX] = selectedTile.getId();
         }
-
-        lastTileY = tileY;
-        lastTileX = tileX;
-
-        lvl[tileY][tileX] = selectedTile.getId();
-    }
     }
 
     @Override
