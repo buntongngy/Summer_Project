@@ -1,7 +1,9 @@
 package main;
 
+import helperPackage.LoadedSave;
 import input.myKeyListener;
 import input.myMouseListener;
+import manager.TileManager;
 import screen.Editing;
 import screen.Menu;
 import screen.Playing;
@@ -26,7 +28,7 @@ public class Game extends JFrame implements Runnable {
     private long lastTimeUpdate;
 
 
-
+    public TileManager tileManager;
     private Render render;
     private Menu menu;
     private Playing playing;
@@ -42,7 +44,7 @@ public class Game extends JFrame implements Runnable {
         setLocationRelativeTo(null);
 
         initClasses();
-
+        createDefaultLvl();
 
         add(screen);
 
@@ -52,6 +54,7 @@ public class Game extends JFrame implements Runnable {
 
     private void initClasses() {
 
+        tileManager = new TileManager();
         render = new Render(this);
         screen = new GameScreen(this);
         menu = new Menu(this);
@@ -126,6 +129,14 @@ public class Game extends JFrame implements Runnable {
 
     }
 
+    private void createDefaultLvl() {
+        int[] arr = new int[400]; // 20x20 level with all tiles set to 0
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = 0;
+        }
+        LoadedSave.createLevel("new level", arr);
+    }
+
     public Render getRender() {
         return render;
     }
@@ -144,6 +155,10 @@ public class Game extends JFrame implements Runnable {
 
     public Editing getEditing() {
         return  editing;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
     }
 
 
