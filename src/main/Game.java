@@ -2,6 +2,7 @@ package main;
 
 import input.myKeyListener;
 import input.myMouseListener;
+import screen.Editing;
 import screen.Menu;
 import screen.Playing;
 import screen.Setting;
@@ -30,6 +31,7 @@ public class Game extends JFrame implements Runnable {
     private Menu menu;
     private Playing playing;
     private Setting setting;
+    private Editing editing;
 
     private Thread gameThread;
 
@@ -55,6 +57,7 @@ public class Game extends JFrame implements Runnable {
         menu = new Menu(this);
         playing = new Playing(this);
         setting = new Setting(this);
+        editing = new Editing(this);
 
     }
 
@@ -137,6 +140,10 @@ public class Game extends JFrame implements Runnable {
 
     public Setting getSetting() {
         return setting;
+    }
+
+    public Editing getEditing() {
+        return  editing;
     }
 
 

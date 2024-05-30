@@ -18,21 +18,33 @@ public class Menu extends GameScreen implements ScreenMethods{
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private BufferedImage img;
     private Random random;
-    private buttonClass bPlay, bSetting, bQuit;
+    private buttonClass bPlay, bSetting, bQuit, bEdit;
 
     public Menu(Game game) {
         super(game);
         random = new Random();
         img = LoadedSave.getSpriteAtlas();
-        loadSprites();
         initButtons();
+    }
+
+    private void initButtons() {
+
+        int w = 150;
+        int h = w/3;
+        int x = 640/2 - w/2;
+        int y = 150;
+        int yOffset = 100;
+
+        bPlay = new buttonClass("Play", x, y, w, h);
+        bEdit = new buttonClass("Edit", x,y + yOffset,w,h );
+        bSetting = new buttonClass("Setting", x, y + yOffset * 2, w, h);
+        bQuit = new buttonClass("Quit", x, y+ yOffset * 3, w, h);
+
     }
 
     @Override
     public void render(Graphics g) {
-
         drawButton(g);
-
     }
 
     @Override
@@ -40,6 +52,8 @@ public class Menu extends GameScreen implements ScreenMethods{
 
         if (bPlay.getBounds().contains(x, y)) {
             setGameState(PLAYING);
+        } else if(bEdit.getBounds().contains(x, y)) {
+            setGameState(EDIT);
         } else if(bSetting.getBounds().contains(x, y)) {
             setGameState(SETTINGS);
         } else if (bQuit.getBounds().contains(x, y)) {
@@ -53,11 +67,14 @@ public class Menu extends GameScreen implements ScreenMethods{
         bPlay.setMouseOver(false);
         bSetting.setMouseOver(false);
         bQuit.setMouseOver(false);
+        bEdit.setMouseOver(false);
 
         if (bPlay.getBounds().contains(x, y)) {
             bPlay.setMouseOver(true);
+        } else if(bEdit.getBounds().contains(x, y)) {
+            bEdit.setMouseOver(true);
         } else if(bSetting.getBounds().contains(x, y)) {
-            bSetting.setMouseOver(true);
+           bSetting.setMouseOver(true);
         } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.setMouseOver(true);
         }
@@ -67,8 +84,10 @@ public class Menu extends GameScreen implements ScreenMethods{
     public void mousePressed(int x, int y) {
         if (bPlay.getBounds().contains(x, y)) {
             bPlay.setMousePress(true);
+        } else if(bEdit.getBounds().contains(x, y)) {
+           bEdit.setMousePress(true);
         } else if(bSetting.getBounds().contains(x, y)) {
-            bSetting.setMousePress(true);
+         bEdit.setMousePress(true);
         } else if (bQuit.getBounds().contains(x, y)) {
             bQuit.setMousePress(true);
         }
@@ -89,40 +108,15 @@ public class Menu extends GameScreen implements ScreenMethods{
        bPlay.resetBoolean();
        bSetting.resetBoolean();
        bQuit.resetBoolean();
-    }
-
-
-    private void initButtons() {
-
-        int w = 150;
-        int h = w/3;
-        int x = 640/2 - w/2;
-        int y = 150;
-        int yOffset = 100;
-
-        bPlay = new buttonClass("Play", x, y, w, h);
-        bSetting = new buttonClass("Setting", x, y + yOffset, w, h);
-        bQuit = new buttonClass("Quit", x, y+2 * yOffset, w, h);
-
+       bEdit.resetBoolean();
     }
 
     private void drawButton(Graphics g) {
         bPlay.draw(g);
+        bEdit.draw(g);
         bSetting.draw(g);
         bQuit.draw(g);
     }
-
-
-
-
-    private void loadSprites() {
-        for (int y=0; y<3; y++) {
-            for (int x=0; x<10; x++) {
-                sprites.add(img.getSubimage(x*32,y*32,32,32));
-            }
-        }
-    }
-
 
     private int getRanInt(){
         return random.nextInt(20);
