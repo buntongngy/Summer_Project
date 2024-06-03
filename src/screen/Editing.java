@@ -7,6 +7,7 @@ import ui.ActionBar;
 import ui.ToolBar;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Editing extends GameScreen implements ScreenMethods{
@@ -127,6 +128,12 @@ public class Editing extends GameScreen implements ScreenMethods{
             // Handle bottomBar drag events if necessary
         } else {
             changeTile(x, y);
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_R) {
+            toolBar.rotateSprite();
         }
     }
 }

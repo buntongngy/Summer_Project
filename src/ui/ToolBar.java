@@ -15,6 +15,7 @@ import static main.GameState.setGameState;
 
 public class ToolBar extends Bar{
 
+    private int currentIndex = 0;
     private Editing editing;
     private buttonClass bMenu, bSave;
     private Tile selectedTile;
@@ -22,6 +23,7 @@ public class ToolBar extends Bar{
     //private ArrayList<buttonClass> tileBtn = new ArrayList<>();
     private Map<buttonClass, ArrayList<Tile>> map = new HashMap<buttonClass, ArrayList<Tile>>();
     private buttonClass bGrass, bWater, bRoadS, bRoadC, bWaterC, bWaterB, bWaterI;
+    private buttonClass currentBtn;
 
     public ToolBar(int x, int y, int width, int height, Editing editing) {
         super(x, y, width, height);
@@ -57,15 +59,23 @@ public class ToolBar extends Bar{
         b = new buttonClass("", x + xOff * id, y, w, h, id);
         map.put(b, list);
 
-
-
     }
 
     private void saveLevel() {
         editing.saveLevel();
     }
 
+    public void rotateSprite() {
 
+        currentIndex++;
+        if(currentIndex >= map.get(currentBtn).size()) {
+            currentIndex = 0;
+        }
+        selectedTile = map.get(currentBtn).get(currentIndex);
+
+        editing.setSelectedTile(selectedTile);
+
+    }
 
     public void draw(Graphics g) {
         g.setColor(new Color(221, 33, 122));
@@ -150,6 +160,8 @@ public class ToolBar extends Bar{
                 if (b.getBounds().contains(x, y)) {
                     selectedTile = map.get(b).get(0);
                     editing.setSelectedTile(selectedTile);
+                    currentBtn = b;
+                    currentIndex = 0;
                     return;
                 }
             }

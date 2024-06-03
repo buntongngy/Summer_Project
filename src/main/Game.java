@@ -161,5 +161,7 @@ public class Game extends JFrame implements Runnable {
         return tileManager;
     }
 
-
+    public Editing getEditor() {
+        return editing;
+    }
 }

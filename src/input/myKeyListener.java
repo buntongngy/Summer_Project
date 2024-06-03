@@ -1,5 +1,6 @@
 package input;
 
+import main.Game;
 import main.GameState;
 
 import java.awt.event.KeyEvent;
@@ -11,6 +12,12 @@ import screen.Setting;
 import static main.GameState.*;
 
 public class myKeyListener implements KeyListener {
+    private Game game;
+
+    public myKeyListener(Game game) {
+        this.game = game;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -18,13 +25,9 @@ public class myKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_A) {
-            GameState.gameState = MENU;
-        } else if (e.getKeyCode() == KeyEvent.VK_D){
-            GameState.gameState = PLAYING;
-        }   else if (e.getKeyCode() == KeyEvent.VK_S) {
-           GameState.gameState = SETTINGS;
-        }
+       if(gameState == EDIT) {
+           game.getEditor().keyPressed(e);
+       }
     }
 
     @Override
