@@ -33,9 +33,9 @@ public class TileManager {
         int id = 0;
 
         tiles.add(GRASS = new Tile(getSprite(9,0), id++, "Grass"));
-        tiles.add(WATER = new Tile(getSprite(1,0), id++ , "Water"));
-        tiles.add(ROAD_LR = new Tile(getSprite(8,0), id++, "Road"));
+        tiles.add(WATER = new Tile(getAnimeSprite(0,0), id++ , "Water"));
 
+        tiles.add(ROAD_LR = new Tile(getSprite(8,0), id++, "Road"));
         roadS.add(ROAD_TB = new Tile(imgFix.getRotateImg(getSprite(8,0), 90), id++, "TB_Road"));
         roadS.add(ROAD_LR = new Tile(getSprite(8,0), id++ ,"ROAD_LR"));
 
@@ -83,6 +83,23 @@ public class TileManager {
 
     public BufferedImage getSprite(int id) {
         return tiles.get(id).getSprite();
+    }
+
+    public BufferedImage getAnimationSprite(int id, int animeIndex) {
+        return tiles.get(id).getSprite(animeIndex);
+    }
+
+    public BufferedImage[] getAnimeSprite(int xCord, int yCord) {
+      BufferedImage[] arr = new BufferedImage[4];
+      for (int i = 0; i<4; i++) {
+          arr[i] = getSprite(xCord + i, yCord);
+      }
+
+      return arr;
+    }
+
+    public boolean isSpriteAnime(int spriteId) {
+       return tiles.get(spriteId).isAnime();
     }
 
     private BufferedImage getSprite(int xCord, int yCord) {
