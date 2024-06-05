@@ -2,6 +2,7 @@ package screen;
 
 import helperPackage.LoadedSave;
 import main.Game;
+import manager.EnemyManager;
 import ui.ActionBar;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ public class Playing extends GameScreen implements ScreenMethods {
     private int[][] lvl;
     private ActionBar bottomBar;
     private int mouseX, mouseY;
+    private EnemyManager enemyManger;
 
     public Playing(Game game) {
         super(game);
@@ -19,6 +21,7 @@ public class Playing extends GameScreen implements ScreenMethods {
         loadDefaultLvl();
 
         bottomBar = new ActionBar(0, 640, 640, 100, this);
+        enemyManger = new EnemyManager(this);
 
         // Check if the level data is still null after loading
         if (lvl == null) {
@@ -50,6 +53,7 @@ public class Playing extends GameScreen implements ScreenMethods {
             }
         }
         bottomBar.draw(g);
+        enemyManger.draw(g);
 
     }
 
