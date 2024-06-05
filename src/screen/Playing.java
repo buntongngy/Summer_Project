@@ -37,6 +37,10 @@ public class Playing extends GameScreen implements ScreenMethods {
         }
     }
 
+    public void update() {
+        enemyManger.update();
+    }
+
     @Override
     public void render(Graphics g) {
         drawLvl(g);
@@ -78,7 +82,8 @@ public class Playing extends GameScreen implements ScreenMethods {
     public void mouseClicked(int x, int y) {
         if (y >= 640) {
             bottomBar.mouseClicked(x, y);
-
+        } else {
+            enemyManger.addEnemies(x,y);
         }
     }
 

@@ -16,6 +16,11 @@ public class Enemy {
         bounds = new Rectangle((int)x, (int)y, 32, 32);
     }
 
+    public void move(float x, float y) {
+        this.x += x;
+        this.y += y;
+    }
+
     public float getX() {
         return x;
     }
