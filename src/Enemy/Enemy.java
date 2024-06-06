@@ -19,6 +19,7 @@ public class Enemy {
     }
 
     public void move(float speed, int dir) {
+        lastDir = dir;
         switch (dir) {
             case LEFT:
                 this.x -= speed;
@@ -33,6 +34,11 @@ public class Enemy {
                 this.y += speed;
                 break;
         }
+    }
+
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public float getX() {

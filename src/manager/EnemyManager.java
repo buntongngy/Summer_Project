@@ -48,11 +48,74 @@ public class EnemyManager {
 
         if(getTileType(newX,newY) == ROAD_TILE) {
             e.move(speed, e.getLastDir());
-        } else {
+        } else if (isAtEnd(e)) {
 
+        } else {
+            setNewDirectionandMove(e);
         }
 
         return false;
+    }
+
+    private void setNewDirectionandMove(Enemy e) {
+
+        int dir = e.getLastDir();
+
+        int xCord = (int)e.getX() /32;
+        int yCord = (int)e.getY() /32;
+
+        fixEnemyOffset(e, dir, xCord, yCord);
+
+        if(dir == LEFT || dir == RIGHT) {
+            int newY = (int)(e.getY() + getSpeedHeight(UP));
+            if (getTileType((int)e.getX(), newY) == ROAD_TILE) {
+                e.move(speed, UP);
+            } else {
+                e.move(speed, DOWN);
+            }
+        } else {
+            int newX = (int)(e.getX() + getSpeedWidth(RIGHT));
+            if(getTileType(newX, (int)e.getY()) == ROAD_TILE) {
+                e.move(speed, RIGHT);
+            } else {
+                e.move(speed, LEFT);
+            }
+        }
+
+    }
+
+    private void fixEnemyOffset(Enemy e, int dir, int xCord, int yCord) {
+
+        switch(dir) {
+//            case LEFT:
+//                if(xCord > 0) {
+//                    xCord--;
+//                }
+//                break;
+            case RIGHT:
+                if (xCord < 19) {
+                    xCord++;
+                }
+                break;
+//            case UP:
+//                if (yCord > 0) {
+//                    yCord--;
+//                }
+//                break;
+            case DOWN:
+                if (yCord < 19) {
+                    yCord++;
+                }
+                break;
+        }
+
+        e.setPos(xCord * 32, yCord * 32);
+
+    }
+
+    private boolean isAtEnd(Enemy e) {
+            return false;
+
     }
 
     private int getTileType(int x, int y) {
