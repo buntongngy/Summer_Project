@@ -67,12 +67,6 @@ public class TileManager {
 
     }
 
-    private BufferedImage[] getImg(int firstX, int firstY, int secondX, int secondY) {
-
-        return new BufferedImage[] {getSprite(firstX, firstY), getSprite(secondX,secondY)};
-
-    }
-
     public Tile getTile(int id) {
         return tiles.get(id);
     }

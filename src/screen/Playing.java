@@ -38,24 +38,13 @@ public class Playing extends GameScreen implements ScreenMethods {
     }
 
     public void update() {
+        updateTick();
         enemyManger.update();
     }
 
     @Override
     public void render(Graphics g) {
         drawLvl(g);
-
-        if (lvl == null) {
-            System.err.println("Level data is null, cannot render");
-            return; // Prevent further rendering logic if lvl is null
-        }
-
-        for (int y = 0; y < lvl.length; y++) {
-            for (int x = 0; x < lvl[y].length; x++) {
-                int id = lvl[y][x];
-                g.drawImage(getSprite(id), x * 32, y * 32, null);
-            }
-        }
         bottomBar.draw(g);
         enemyManger.draw(g);
 
@@ -69,13 +58,13 @@ public class Playing extends GameScreen implements ScreenMethods {
         for (int y = 0; y < lvl.length; y++) {
             for (int x = 0; x < lvl[y].length; x++) {
                 int id = lvl[y][x];
-                g.drawImage(getSprite(id), x * 32, y * 32, null);
+                if (isAnimation(id)) {
+                    g.drawImage(getSprite(id, animeIndex), x * 32, y * 32, null);
+                } else {
+                    g.drawImage(getSprite(id), x * 32, y * 32, null);
+                }
             }
         }
-    }
-
-    public BufferedImage getSprite(int spriteId) {
-        return game.getTileManager().getSprite(spriteId);
     }
 
     @Override

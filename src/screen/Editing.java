@@ -18,7 +18,7 @@ public class Editing extends GameScreen implements ScreenMethods{
     private boolean drawSelect = false;
 
     private ToolBar toolBar;
-    private int lastTileX, lastTileY, lastTileId, animeIndex, tick;
+    private int lastTileX, lastTileY, lastTileId;
 
 
     public Editing(Game game) {
@@ -37,22 +37,17 @@ public class Editing extends GameScreen implements ScreenMethods{
 
     @Override
     public void render(Graphics g) {
-        updateTick();
+
         drawLvl(g);
         toolBar.draw(g);
         drawSelectTile(g);
     }
 
-    private void updateTick() {
-        tick++;
-        if (tick >= 20) {
-            tick = 0;
-            animeIndex++;
-            if (animeIndex >= 4) {
-                animeIndex =0;
-            }
-        }
+    public void update() {
+        updateTick();
     }
+
+
 
     private void drawLvl(Graphics g) {
         for (int y = 0; y < lvl.length; y++) {
@@ -67,17 +62,6 @@ public class Editing extends GameScreen implements ScreenMethods{
         }
 }
 
-    private boolean isAnimation(int spriteId) {
-        return game.getTileManager().isSpriteAnime(spriteId);
-    }
-
-    public BufferedImage getSprite(int spriteId) {
-        return game.getTileManager().getSprite(spriteId);
-    }
-
-    public BufferedImage getSprite(int spriteId, int animeIndex) {
-        return game.getTileManager().getAnimationSprite(spriteId, animeIndex);
-    }
 
     public void saveLevel() {
         LoadedSave.saveLevel("new level", lvl);
