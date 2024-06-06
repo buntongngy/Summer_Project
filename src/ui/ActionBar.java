@@ -36,10 +36,6 @@ public class ActionBar extends Bar {
         int xOffset = (int) (w * 1.1);
         int i = 0;
 
-        for (Tile tile : playing.getGame().getTileManager().tiles) {
-            tileBtn.add(new buttonClass(tile.getName(), xStart + xOffset * i, yStart, w, h, i));
-            i++;
-        }
     }
 
     private void drawBtn(Graphics g) {

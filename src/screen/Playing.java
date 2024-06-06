@@ -67,6 +67,11 @@ public class Playing extends GameScreen implements ScreenMethods {
         }
     }
 
+    public int getTileType(int x, int y) {
+        int id = lvl[y/32][x/32];
+        return game.getTileManager().getTile(id).getTileType();
+    }
+
     @Override
     public void mouseClicked(int x, int y) {
         if (y >= 640) {

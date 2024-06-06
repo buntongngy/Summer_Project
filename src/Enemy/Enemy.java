@@ -1,24 +1,38 @@
 package Enemy;
 
 import java.awt.*;
+import static helperPackage.Constants.Direction.*;
 
 public class Enemy {
 
     private float x,y;
     private Rectangle bounds;
-    private int health, id, enemyType;
+    private int health, id, enemyType, lastDir;
 
     public Enemy(float x, float y, int id, int enemyType) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.enemyType = enemyType;
+        lastDir = RIGHT;
         bounds = new Rectangle((int)x, (int)y, 32, 32);
     }
 
-    public void move(float x, float y) {
-        this.x += x;
-        this.y += y;
+    public void move(float speed, int dir) {
+        switch (dir) {
+            case LEFT:
+                this.x -= speed;
+                break;
+            case RIGHT:
+                this.x += speed;
+                break;
+            case UP:
+                this.y -= speed;
+                break;
+            case DOWN:
+                this.y += speed;
+                break;
+        }
     }
 
     public float getX() {
@@ -43,5 +57,17 @@ public class Enemy {
 
     public int getEnemyType() {
         return enemyType;
+    }
+
+    public int getLastDir() {
+        return lastDir;
+    }
+
+    public float getSpeedX(int lastDir) {
+        return lastDir;
+    }
+
+    public float getSpeedY(int lastDir) {
+        return lastDir;
     }
 }
