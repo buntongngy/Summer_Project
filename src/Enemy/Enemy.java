@@ -14,7 +14,7 @@ public abstract class Enemy {
         this.y = y;
         this.id = id;
         this.enemyType = enemyType;
-        lastDir = RIGHT;
+        lastDir = -1;
         bounds = new Rectangle((int)x, (int)y, 32, 32);
     }
 

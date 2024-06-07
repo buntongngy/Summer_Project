@@ -24,7 +24,7 @@ public class Editing extends GameScreen implements ScreenMethods{
     public Editing(Game game) {
         super(game);
         loadDefaultLvl();
-        toolBar = new ToolBar(0, 640, 640, 100, this);
+        toolBar = new ToolBar(0, 640, 640, 160, this);
 
     }
 

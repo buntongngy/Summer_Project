@@ -27,6 +27,9 @@ public class EnemyManager {
         this.playing = playing;
         enemyImg = new BufferedImage[4];
         addEnemies(0 * 32,13 * 32, ORC);
+        addEnemies(6 * 32,9 * 32, BAT);
+        addEnemies(7 * 32,9 * 32, KNIGHT);
+        addEnemies(8 * 32,8 * 32, WOLF);
         loadEnemyImg();
     }
 
@@ -46,6 +49,10 @@ public class EnemyManager {
 
     public void updateEnemyMove(Enemy e) {
 
+        if (e.getLastDir() == -1) {
+            setNewDirectionandMove(e);
+        }
+
         int newX = (int)(e.getX() + getSpeedWidth(e.getLastDir()));
         int newY = (int)(e.getY() + getSpeedHeight(e.getLastDir()));
 
@@ -54,7 +61,7 @@ public class EnemyManager {
         } else if (isAtEnd(e)) {
 
         } else {
-            setNewDirectionandMove(e);
+
         }
 
     }
@@ -89,21 +96,12 @@ public class EnemyManager {
     private void fixEnemyOffset(Enemy e, int dir, int xCord, int yCord) {
 
         switch(dir) {
-//            case LEFT:
-//                if(xCord > 0) {
-//                    xCord--;
-//                }
-//                break;
+
             case RIGHT:
                 if (xCord < 19) {
                     xCord++;
                 }
                 break;
-//            case UP:
-//                if (yCord > 0) {
-//                    yCord--;
-//                }
-//                break;
             case DOWN:
                 if (yCord < 19) {
                     yCord++;
@@ -171,7 +169,7 @@ public class EnemyManager {
 
     private void drawEnemy(Enemy e, Graphics g) {
 
-        g.drawImage(enemyImg[0], (int)e.getX(),(int)e.getY(),null);
+        g.drawImage(enemyImg[e.getEnemyType()], (int)e.getX(),(int)e.getY(),null);
 
     }
 }

@@ -4,8 +4,6 @@ import input.myKeyListener;
 import input.myMouseListener;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -38,7 +36,7 @@ public class GameScreen extends JPanel {
     }
 
     public void setPanelSize() {
-        size = new Dimension(640, 740);
+        size = new Dimension(640, 800);
         setMinimumSize(size);
         setPreferredSize(size);
         setMaximumSize(size);
