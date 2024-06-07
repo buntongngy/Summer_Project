@@ -89,7 +89,7 @@ public class Playing extends GameScreen implements ScreenMethods {
         if (y >= 640) {
             bottomBar.mouseClicked(x, y);
         } else {
-            enemyManger.addEnemies(x,y);
+
         }
     }
 

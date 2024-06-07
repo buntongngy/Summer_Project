@@ -3,7 +3,7 @@ package Enemy;
 import java.awt.*;
 import static helperPackage.Constants.Direction.*;
 
-public class Enemy {
+public abstract class Enemy {
 
     private float x,y;
     private Rectangle bounds;
