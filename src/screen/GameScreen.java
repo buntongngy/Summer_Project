@@ -20,6 +20,10 @@ public class GameScreen {
     }
 
     protected boolean isAnimation(int spriteId) {
+
+        if (spriteId == -1 || spriteId == -2) {
+            return false;
+        }
         return game.getTileManager().isSpriteAnime(spriteId);
     }
 
@@ -35,6 +39,7 @@ public class GameScreen {
     }
 
     protected BufferedImage getSprite(int spriteId) {
+
         return game.getTileManager().getSprite(spriteId);
     }
 

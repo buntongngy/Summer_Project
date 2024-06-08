@@ -2,6 +2,7 @@ package screen;
 
 import helperPackage.LoadedSave;
 import main.Game;
+import objects.PathPoint;
 import objects.Tile;
 import ui.ActionBar;
 import ui.ToolBar;
@@ -9,6 +10,8 @@ import ui.ToolBar;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+
+import static helperPackage.Constants.Tile.ROAD_TILE;
 
 public class Editing extends GameScreen implements ScreenMethods{
 
@@ -19,6 +22,8 @@ public class Editing extends GameScreen implements ScreenMethods{
 
     private ToolBar toolBar;
     private int lastTileX, lastTileY, lastTileId;
+
+    private PathPoint start, end;
 
 
     public Editing(Game game) {
@@ -41,6 +46,19 @@ public class Editing extends GameScreen implements ScreenMethods{
         drawLvl(g);
         toolBar.draw(g);
         drawSelectTile(g);
+        drawPathPoint(g);
+    }
+
+    private void drawPathPoint(Graphics g) {
+
+        if(start != null) {
+            g.drawImage(toolBar.getStartPathImg(),start.getXCord() * 32, start.getYCord() * 32, 32, 32, null );
+        }
+
+        if (end != null) {
+            g.drawImage(toolBar.getEndPathImg(),end.getXCord() * 32, end.getYCord() * 32, 32, 32, null );
+        }
+
     }
 
     public void update() {
@@ -55,12 +73,12 @@ public class Editing extends GameScreen implements ScreenMethods{
                 int id = lvl[y][x];
                 if (isAnimation(id)) {
                     g.drawImage(getSprite(id, animeIndex), x * 32, y * 32, null);
-                } else {
+                } else
                     g.drawImage(getSprite(id), x * 32, y * 32, null);
-                }
             }
         }
-}
+    }
+
 
 
     public void saveLevel() {
@@ -84,15 +102,24 @@ public class Editing extends GameScreen implements ScreenMethods{
             int tileX = x / 32;
             int tileY = y / 32;
 
-            if (lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId()) {
-                return;
+            if (selectedTile.getId() >= 0) {
+                if (lastTileX == tileX && lastTileY == tileY && lastTileId == selectedTile.getId())
+                    return;
+
+                lastTileX = tileX;
+                lastTileY = tileY;
+                lastTileId = selectedTile.getId();
+
+                lvl[tileY][tileX] = selectedTile.getId();
+            } else {
+                int id = lvl[tileY][tileX];
+                if (game.getTileManager().getTile(id).getTileType() == ROAD_TILE) {
+                    if (selectedTile.getId() == -1)
+                        start = new PathPoint(tileX, tileY);
+                    else
+                        end = new PathPoint(tileX, tileY);
+                }
             }
-
-            lastTileY = tileY;
-            lastTileX = tileX;
-            lastTileId = selectedTile.getId();
-
-            lvl[tileY][tileX] = selectedTile.getId();
         }
     }
 

@@ -77,7 +77,19 @@ public class TileManager {
     }
 
     public BufferedImage getSprite(int id) {
-        return tiles.get(id).getSprite();
+        if (id >= 0 && id < tiles.size()) {
+            return tiles.get(id).getSprite();
+        } else {
+            // Handle special cases for IDs -1 and -2
+            if (id == -1 || id == -2) {
+
+                return null;
+            } else {
+                // Handle other cases where ID is out of bounds
+                // For now, returning null
+                return null;
+            }
+        }
     }
 
     public BufferedImage getAnimationSprite(int id, int animeIndex) {

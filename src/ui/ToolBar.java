@@ -20,7 +20,7 @@ public class ToolBar extends Bar{
     private buttonClass bMenu, bSave;
     private buttonClass bPathStart, bPathEnd;
     private Tile selectedTile;
-    private BufferedImage pathstart, pathEnd;
+    private BufferedImage pathStart, pathEnd;
 
     //private ArrayList<buttonClass> tileBtn = new ArrayList<>();
     private Map<buttonClass, ArrayList<Tile>> map = new HashMap<buttonClass, ArrayList<Tile>>();
@@ -35,7 +35,7 @@ public class ToolBar extends Bar{
     }
 
     public void initPathImg() {
-        pathstart = LoadedSave.getSpriteAtlas().getSubimage(7*32,2*32, 32,32);
+        pathStart = LoadedSave.getSpriteAtlas().getSubimage(7*32,2*32, 32,32);
         pathEnd = LoadedSave.getSpriteAtlas().getSubimage(8*32, 2*32,32,32);
     }
 
@@ -82,7 +82,7 @@ public class ToolBar extends Bar{
         if(currentIndex >= map.get(currentBtn).size()) {
             currentIndex = 0;
         }
-        selectedTile = map.get(currentBtn).get(currentIndex);
+        selectedTile = map.get(currentBtn)  .get(currentIndex);
 
         editing.setSelectedTile(selectedTile);
 
@@ -101,7 +101,7 @@ public class ToolBar extends Bar{
         bPathStart.draw(g);
         bPathEnd.draw(g);
 
-        drawPathBtn(g, bPathStart, pathstart);
+        drawPathBtn(g, bPathStart, pathStart);
         drawPathBtn(g, bPathEnd, pathEnd);
 
         drawNormalBtn(g, bGrass);
@@ -177,11 +177,11 @@ public class ToolBar extends Bar{
             return;
         }  else if (bPathStart.getBounds().contains(x,y)) {
 
-            selectedTile = new Tile(pathstart, -1,-1);
+            selectedTile = new Tile(pathStart, -1,-1);
             editing.setSelectedTile(selectedTile);
 
         }else if (bPathEnd.getBounds().contains(x,y)) {
-            selectedTile = new Tile(pathEnd, -2,-1);
+            selectedTile = new Tile(pathEnd, -2,-2);
             editing.setSelectedTile(selectedTile);
         }else {
 
@@ -267,4 +267,13 @@ public class ToolBar extends Bar{
             b.resetBoolean();
         }
     }
+
+    public BufferedImage getStartPathImg() {
+        return pathStart;
+    }
+
+    public BufferedImage getEndPathImg() {
+        return pathEnd;
+    }
+
 }
