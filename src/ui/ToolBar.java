@@ -1,279 +1,278 @@
 package ui;
 
-import helperPackage.LoadedSave;
-import objects.Tile;
-import screen.Editing;
+import static main.GameStates.MENU;
+import static main.GameStates.SetGameState;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static main.GameState.MENU;
-import static main.GameState.setGameState;
+import helpz.LoadSave;
+import objects.Tile;
+import scenes.Editing;
 
-public class ToolBar extends Bar{
+public class Toolbar extends Bar {
+	private Editing editing;
+	private MyButton bMenu, bSave;
+	private MyButton bPathStart, bPathEnd;
+	private BufferedImage pathStart, pathEnd;
+	private Tile selectedTile;
 
-    private int currentIndex = 0;
-    private Editing editing;
-    private buttonClass bMenu, bSave;
-    private buttonClass bPathStart, bPathEnd;
-    private Tile selectedTile;
-    private BufferedImage pathStart, pathEnd;
+	private Map<MyButton, ArrayList<Tile>> map = new HashMap<MyButton, ArrayList<Tile>>();
 
-    //private ArrayList<buttonClass> tileBtn = new ArrayList<>();
-    private Map<buttonClass, ArrayList<Tile>> map = new HashMap<buttonClass, ArrayList<Tile>>();
-    private buttonClass bGrass, bWater, bRoadS, bRoadC, bWaterC, bWaterB, bWaterI;
-    private buttonClass currentBtn;
+	private MyButton bGrass, bWater, bRoadS, bRoadC, bWaterC, bWaterB, bWaterI;
+	private MyButton currentButton;
+	private int currentIndex = 0;
 
-    public ToolBar(int x, int y, int width, int height, Editing editing) {
-        super(x, y, width, height);
-        this.editing = editing;
-        initPathImg();
-        initButton();
-    }
+	public Toolbar(int x, int y, int width, int height, Editing editing) {
+		super(x, y, width, height);
+		this.editing = editing;
+		initPathImgs();
+		initButtons();
+	}
 
-    public void initPathImg() {
-        pathStart = LoadedSave.getSpriteAtlas().getSubimage(7*32,2*32, 32,32);
-        pathEnd = LoadedSave.getSpriteAtlas().getSubimage(8*32, 2*32,32,32);
-    }
+	private void initPathImgs() {
+		pathStart = LoadSave.getSpriteAtlas().getSubimage(7 * 32, 2 * 32, 32, 32);
+		pathEnd = LoadSave.getSpriteAtlas().getSubimage(8 * 32, 2 * 32, 32, 32);
+	}
 
-    private void initButton() {
-        bMenu = new buttonClass("Menu", 2, 642, 100, 30);
-        bSave = new buttonClass("Save", 2, 674, 100, 30);
+	private void initButtons() {
 
-        int w = 50;
-        int h = 50;
-        int xStart = 100;
-        int yStart = 650;
-        int xOffset = (int) (w * 1.1);
-        int i = 0;
+		bMenu = new MyButton("Menu", 2, 642, 100, 30);
+		bSave = new MyButton("Save", 2, 674, 100, 30);
 
-        bGrass = new buttonClass("Grass", xStart, yStart, w, h ,i++);
-        bWater = new buttonClass("Water", xStart + xOffset, yStart, w, h, i++);
+		int w = 50;
+		int h = 50;
+		int xStart = 110;
+		int yStart = 650;
+		int xOffset = (int) (w * 1.1f);
+		int i = 0;
 
-        initMapBtn(bRoadS, editing.getGame().getTileManager().getRoadS(), xStart, yStart, xOffset, w, h, i++);
-        initMapBtn(bRoadC, editing.getGame().getTileManager().getRoadC(), xStart, yStart, xOffset, w, h, i++);
-        initMapBtn(bWaterC, editing.getGame().getTileManager().getCorner(), xStart, yStart, xOffset, w, h, i++);
-        initMapBtn(bWaterB, editing.getGame().getTileManager().getBeach(), xStart, yStart, xOffset, w, h, i++);
-        initMapBtn(bWaterI, editing.getGame().getTileManager().getIsland(), xStart, yStart, xOffset, w, h, i++);
+		bGrass = new MyButton("Grass", xStart, yStart, w, h, i++);
+		bWater = new MyButton("Water", xStart + xOffset, yStart, w, h, i++);
 
-        bPathStart = new buttonClass("PathStart", xStart, yStart + xOffset, w,h,i++);
-        bPathEnd = new buttonClass("PathEnd", xStart + xOffset, yStart + xOffset, w,h,i++);
+		initMapButton(bRoadS, editing.getGame().getTileManager().getRoadsS(), xStart, yStart, xOffset, w, h, i++);
+		initMapButton(bRoadC, editing.getGame().getTileManager().getRoadsC(), xStart, yStart, xOffset, w, h, i++);
+		initMapButton(bWaterC, editing.getGame().getTileManager().getCorners(), xStart, yStart, xOffset, w, h, i++);
+		initMapButton(bWaterB, editing.getGame().getTileManager().getBeaches(), xStart, yStart, xOffset, w, h, i++);
+		initMapButton(bWaterI, editing.getGame().getTileManager().getIslands(), xStart, yStart, xOffset, w, h, i++);
 
+		bPathStart = new MyButton("PathStart", xStart, yStart + xOffset, w, h, i++);
+		bPathEnd = new MyButton("PathEnd", xStart + xOffset, yStart + xOffset, w, h, i++);
 
-    }
+	}
 
-    private void initMapBtn(buttonClass b, ArrayList<Tile> list, int x, int y, int xOff, int w, int h, int id) {
+	private void initMapButton(MyButton b, ArrayList<Tile> list, int x, int y, int xOff, int w, int h, int id) {
+		b = new MyButton("", x + xOff * id, y, w, h, id);
+		map.put(b, list);
+	}
 
-        b = new buttonClass("", x + xOff * id, y, w, h, id);
-        map.put(b, list);
+	private void saveLevel() {
+		editing.saveLevel();
+	}
 
-    }
+	public void rotateSprite() {
 
-    private void saveLevel() {
-        editing.saveLevel();
-    }
+		currentIndex++;
+		if (currentIndex >= map.get(currentButton).size())
+			currentIndex = 0;
+		selectedTile = map.get(currentButton).get(currentIndex);
+		editing.setSelectedTile(selectedTile);
 
-    public void rotateSprite() {
+	}
 
-        currentIndex++;
-        if(currentIndex >= map.get(currentBtn).size()) {
-            currentIndex = 0;
-        }
-        selectedTile = map.get(currentBtn)  .get(currentIndex);
+	public void draw(Graphics g) {
 
-        editing.setSelectedTile(selectedTile);
+		// Background
+		g.setColor(new Color(220, 123, 15));
+		g.fillRect(x, y, width, height);
 
-    }
+		// Buttons
+		drawButtons(g);
+	}
 
-    public void draw(Graphics g) {
-        g.setColor(new Color(221, 33, 122));
-        g.fillRect(x, y, width, height);
+	private void drawButtons(Graphics g) {
+		bMenu.draw(g);
+		bSave.draw(g);
 
-        drawBtn(g);
-    }
+		drawPathButton(g, bPathStart, pathStart);
+		drawPathButton(g, bPathEnd, pathEnd);
 
-    private void drawBtn(Graphics g) {
-        bMenu.draw(g);
-        bSave.draw(g);
-        bPathStart.draw(g);
-        bPathEnd.draw(g);
+//		bPathStart.draw(g);
+//		bPathEnd.draw(g);
 
-        drawPathBtn(g, bPathStart, pathStart);
-        drawPathBtn(g, bPathEnd, pathEnd);
+		drawNormalButton(g, bGrass);
+		drawNormalButton(g, bWater);
+		drawSelectedTile(g);
+		drawMapButtons(g);
 
-        drawNormalBtn(g, bGrass);
-        drawNormalBtn(g, bWater);
-        drawSelectTile(g);
-        drawMapBtn(g);
-    }
+	}
 
-    public void drawPathBtn(Graphics g, buttonClass b, BufferedImage img) {
+	private void drawPathButton(Graphics g, MyButton b, BufferedImage img) {
 
-        g.drawImage(img, b.x, b.y, b.width, b.height, null);
-        drawBtnFeedBack(g,b);
+		g.drawImage(img, b.x, b.y, b.width, b.height, null);
+		drawButtonFeedback(g, b);
 
-    }
-    private void drawNormalBtn(Graphics g, buttonClass b) {
+	}
 
-        g.drawImage(getBtnImg(b.getId()), b.x, b.y, b.width, b.height, null);
-        drawBtnFeedBack(g, b);
-    }
+	private void drawNormalButton(Graphics g, MyButton b) {
+		g.drawImage(getButtImg(b.getId()), b.x, b.y, b.width, b.height, null);
+		drawButtonFeedback(g, b);
 
-    private void drawMapBtn(Graphics g) {
-        for(Map.Entry<buttonClass, ArrayList<Tile>> entry : map.entrySet()) {
-            buttonClass b = entry.getKey();
-            BufferedImage img = entry.getValue().get(0).getSprite();
+	}
 
-            g.drawImage(img, b.x, b.y, b.width, b.height, null);
-            drawBtnFeedBack(g, b);
+	private void drawMapButtons(Graphics g) {
+		for (Map.Entry<MyButton, ArrayList<Tile>> entry : map.entrySet()) {
+			MyButton b = entry.getKey();
+			BufferedImage img = entry.getValue().get(0).getSprite();
 
-        }
-    }
+			g.drawImage(img, b.x, b.y, b.width, b.height, null);
+			drawButtonFeedback(g, b);
+		}
 
-    private void drawBtnFeedBack(Graphics g, buttonClass b) {
-        // Mouse Over
-        if (b.isMouseOver()) {
-            g.setColor(Color.WHITE);
-        } else {
-            g.setColor(Color.YELLOW);
-        }
+	}
 
-        // Border
-        g.drawRect(b.x, b.y, b.width, b.height);
+	private void drawButtonFeedback(Graphics g, MyButton b) {
+		// MouseOver
+		if (b.isMouseOver())
+			g.setColor(Color.white);
+		else
+			g.setColor(Color.BLACK);
 
-        // Mouse Press
-        if (b.isMousePress()) {
-            g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
-            g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
-        }
-    }
+		// Border
+		g.drawRect(b.x, b.y, b.width, b.height);
 
-    private void drawSelectTile(Graphics g) {
-        if (selectedTile != null) {
-            g.drawImage(selectedTile.getSprite(), 550, 640, 50, 50, null);
-            g.drawRect(550, 640, 50, 50);
-        }
-    }
+		// MousePressed
+		if (b.isMousePressed()) {
+			g.drawRect(b.x + 1, b.y + 1, b.width - 2, b.height - 2);
+			g.drawRect(b.x + 2, b.y + 2, b.width - 4, b.height - 4);
+		}
+	}
 
-    public BufferedImage getBtnImg(int id) {
-        return editing.getGame().getTileManager().getSprite(id);
-    }
+	private void drawSelectedTile(Graphics g) {
 
-    public void mouseClicked(int x, int y) {
-        if (bMenu.getBounds().contains(x, y)) {
-            setGameState(MENU);
-        } else if (bSave.getBounds().contains(x, y)) {
-            saveLevel();
-        } else if (bWater.getBounds().contains(x,y)) {
-            selectedTile = editing.getGame().getTileManager().getTile(bWater.getId());
-            editing.setSelectedTile(selectedTile);
-            return;
-        } else if (bGrass.getBounds().contains(x,y)) {
-            selectedTile = editing.getGame().getTileManager().getTile(bGrass.getId());
-            editing.setSelectedTile(selectedTile);
-            return;
-        }  else if (bPathStart.getBounds().contains(x,y)) {
+		if (selectedTile != null) {
+			g.drawImage(selectedTile.getSprite(), 550, 650, 50, 50, null);
+			g.setColor(Color.black);
+			g.drawRect(550, 650, 50, 50);
+		}
 
-            selectedTile = new Tile(pathStart, -1,-1);
-            editing.setSelectedTile(selectedTile);
+	}
 
-        }else if (bPathEnd.getBounds().contains(x,y)) {
-            selectedTile = new Tile(pathEnd, -2,-2);
-            editing.setSelectedTile(selectedTile);
-        }else {
+	public BufferedImage getButtImg(int id) {
+		return editing.getGame().getTileManager().getSprite(id);
+	}
 
-            for(buttonClass b : map.keySet()) {
-                if (b.getBounds().contains(x, y)) {
-                    selectedTile = map.get(b).get(0);
-                    editing.setSelectedTile(selectedTile);
-                    currentBtn = b;
-                    currentIndex = 0;
-                    return;
-                }
-            }
+	public void mouseClicked(int x, int y) {
+		if (bMenu.getBounds().contains(x, y))
+			SetGameState(MENU);
+		else if (bSave.getBounds().contains(x, y))
+			saveLevel();
+		else if (bWater.getBounds().contains(x, y)) {
+			selectedTile = editing.getGame().getTileManager().getTile(bWater.getId());
+			editing.setSelectedTile(selectedTile);
+			return;
+		} else if (bGrass.getBounds().contains(x, y)) {
+			selectedTile = editing.getGame().getTileManager().getTile(bGrass.getId());
+			editing.setSelectedTile(selectedTile);
+			return;
 
-        }
-    }
+		} else if (bPathStart.getBounds().contains(x, y)) {
+			selectedTile = new Tile(pathStart, -1, -1);
+			editing.setSelectedTile(selectedTile);
 
-    public void mouseMoved(int x, int y) {
-        bMenu.setMouseOver(false);
-        bSave.setMouseOver(false);
-        bWater.setMouseOver(false);
-        bGrass.setMouseOver(false);
-        bPathStart.setMouseOver(false);
-        bPathEnd.setMouseOver(false);
+		} else if (bPathEnd.getBounds().contains(x, y)) {
+			selectedTile = new Tile(pathEnd, -2, -2);
+			editing.setSelectedTile(selectedTile);
+		} else {
+			for (MyButton b : map.keySet())
+				if (b.getBounds().contains(x, y)) {
+					selectedTile = map.get(b).get(0);
+					editing.setSelectedTile(selectedTile);
+					currentButton = b;
+					currentIndex = 0;
+					return;
+				}
+		}
 
-        for(buttonClass b : map.keySet()) {
-            b.setMouseOver(true);
-        }
+	}
 
-        if (bMenu.getBounds().contains(x, y)) {
-            bMenu.setMouseOver(true);
-        } else if (bSave.getBounds().contains(x, y)) {
-            bSave.setMouseOver(true);
-        } else if (bGrass.getBounds().contains(x, y)) {
-            bGrass.setMouseOver(true);
-        }else if (bWater.getBounds().contains(x, y)) {
-            bWater.setMouseOver(true);
-        }else if (bPathStart.getBounds().contains(x, y)) {
-            bPathStart.setMouseOver(true);
-        } else if (bPathEnd.getBounds().contains(x, y)) {
-            bPathEnd.setMouseOver(true);
-        } else {
-            for (buttonClass b : map.keySet()) {
-                if (b.getBounds().contains(x, y)) {
-                    b.setMouseOver(true);
-                    return;
-                }
-            }
-        }
-    }
+	public void mouseMoved(int x, int y) {
+		bMenu.setMouseOver(false);
+		bSave.setMouseOver(false);
+		bWater.setMouseOver(false);
+		bGrass.setMouseOver(false);
+		bPathStart.setMouseOver(false);
+		bPathEnd.setMouseOver(false);
 
-    public void mousePressed(int x, int y) {
-        if (bMenu.getBounds().contains(x, y)) {
-            bMenu.setMousePress(true);
-        } else if(bSave.getBounds().contains(x, y)) {
-            bSave.setMousePress(true);
-        }else if (bGrass.getBounds().contains(x, y)) {
-            bGrass.setMousePress(true);
-        }else if (bWater.getBounds().contains(x, y)) {
-            bWater.setMousePress(true);
-        } else if (bPathStart.getBounds().contains(x, y)) {
-            bPathStart.setMousePress(true);
-        } else if (bPathEnd.getBounds().contains(x, y)) {
-            bPathEnd.setMousePress(true);
-        }
-        else {
-            for (buttonClass b : map.keySet()) {
-                if (b.getBounds().contains(x, y)) {
-                    b.setMousePress(true);
-                    return;
-                }
-            }
-        }
-    }
+		for (MyButton b : map.keySet())
+			b.setMouseOver(false);
 
-    public void mouseRelease(int x, int y) {
-        bMenu.resetBoolean();
-        bSave.resetBoolean();
-        bWater.resetBoolean();
-        bGrass.resetBoolean();
-        bPathEnd.resetBoolean();
-        bPathStart.resetBoolean();
-        for (buttonClass b : map.keySet()) {
-            b.resetBoolean();
-        }
-    }
+		if (bMenu.getBounds().contains(x, y))
+			bMenu.setMouseOver(true);
+		else if (bSave.getBounds().contains(x, y))
+			bSave.setMouseOver(true);
+		else if (bWater.getBounds().contains(x, y))
+			bWater.setMouseOver(true);
+		else if (bGrass.getBounds().contains(x, y))
+			bGrass.setMouseOver(true);
+		else if (bPathStart.getBounds().contains(x, y))
+			bPathStart.setMouseOver(true);
+		else if (bPathEnd.getBounds().contains(x, y))
+			bPathEnd.setMouseOver(true);
+		else {
+			for (MyButton b : map.keySet())
+				if (b.getBounds().contains(x, y)) {
+					b.setMouseOver(true);
+					return;
+				}
+		}
 
-    public BufferedImage getStartPathImg() {
-        return pathStart;
-    }
+	}
 
-    public BufferedImage getEndPathImg() {
-        return pathEnd;
-    }
+	public void mousePressed(int x, int y) {
+		if (bMenu.getBounds().contains(x, y))
+			bMenu.setMousePressed(true);
+		else if (bSave.getBounds().contains(x, y))
+			bSave.setMousePressed(true);
+		else if (bWater.getBounds().contains(x, y))
+			bWater.setMousePressed(true);
+		else if (bGrass.getBounds().contains(x, y))
+			bGrass.setMousePressed(true);
+		else if (bPathStart.getBounds().contains(x, y))
+			bPathStart.setMousePressed(true);
+		else if (bPathEnd.getBounds().contains(x, y))
+			bPathEnd.setMousePressed(true);
+		else {
+			for (MyButton b : map.keySet())
+				if (b.getBounds().contains(x, y)) {
+					b.setMousePressed(true);
+					return;
+				}
+		}
+	}
+
+	public void mouseReleased(int x, int y) {
+		bMenu.resetBooleans();
+		bSave.resetBooleans();
+		bGrass.resetBooleans();
+		bWater.resetBooleans();
+		bPathStart.resetBooleans();
+		bPathEnd.resetBooleans();
+		for (MyButton b : map.keySet())
+			b.resetBooleans();
+
+	}
+
+	public BufferedImage getStartPathImg() {
+		return pathStart;
+	}
+
+	public BufferedImage getEndPathImg() {
+		return pathEnd;
+	}
 
 }
