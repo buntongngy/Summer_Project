@@ -2,6 +2,13 @@ package helpz;
 
 public class Constants {
 
+	public static class Tower {
+		public static final int CANNON = 0;
+		public static final int ARCHER = 1;
+		public static final int WIZARD = 2;
+
+	}
+
 	public static class Direction {
 		public static final int LEFT = 0;
 		public static final int UP = 1;

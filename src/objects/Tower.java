@@ -11,4 +11,20 @@ public class Tower {
         this.towerType = towerType;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getTowerType() {
+        return towerType;
+    }
+
 }
