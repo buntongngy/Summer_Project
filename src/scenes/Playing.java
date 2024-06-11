@@ -19,6 +19,7 @@ public class Playing extends GameScene implements SceneMethods {
 	private int mouseX, mouseY;
 	private EnemyManager enemyManager;
 	private TowerManager towerManager;
+	private Tower selectedTower;
 	private PathPoint start, end;
 
 	public Playing(Game game) {
@@ -50,6 +51,11 @@ public class Playing extends GameScene implements SceneMethods {
 		towerManager.update();
 	}
 
+	public void setSelectTower(Tower selectedTower) {
+
+		this.selectedTower = selectedTower;
+	}
+
 	@Override
 	public void render(Graphics g) {
 
@@ -57,8 +63,15 @@ public class Playing extends GameScene implements SceneMethods {
 		actionBar.draw(g);
 		enemyManager.draw(g);
 		towerManager.draw(g);
+		drawSelectedTower(g);
 
 	}
+
+	private void drawSelectedTower(Graphics g) {
+		if (selectedTower != null)
+		g.drawImage(towerManager.getTowerImg()[selectedTower.getTowerType()], mouseX, mouseY, null);
+	}
+
 
 	private void drawLevel(Graphics g) {
 
@@ -94,8 +107,11 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseClicked(int x, int y) {
 		if (y >= 640)
 			actionBar.mouseClicked(x, y);
-//		else
-//			enemyManager.addEnemy(x, y);
+		else {
+			if(selectedTower != null)
+				towerManager.addTower(selectedTower, mouseX, mouseY);
+			selectedTower = null;
+		}
 	}
 
 	@Override
@@ -124,5 +140,6 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseDragged(int x, int y) {
 
 	}
+
 
 }
