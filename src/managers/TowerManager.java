@@ -7,8 +7,7 @@ import scenes.Playing;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static helpz.Constants.Tower.ARCHER;
-import static helpz.Constants.Tower.CANNON;
+import static helpz.Constants.Tower.*;
 
 public class TowerManager {
 
@@ -37,7 +36,7 @@ public class TowerManager {
         towerImg = new BufferedImage[3];
 
         for (int i =0; i<3;i++) {
-            towerImg[i] = atlas.getSubimage((4 + 1) * 32, 32,32,32);
+            towerImg[i] = atlas.getSubimage((4 + i) * 32, 32,32,32);
         }
 
     }
@@ -45,7 +44,13 @@ public class TowerManager {
     public void draw(Graphics g) {
 
         g.drawImage(towerImg[ARCHER], tower.getX(), tower.getY(), null);
+        g.drawImage(towerImg[CANNON], tower.getX(), tower.getY(), null);
+        g.drawImage(towerImg[WIZARD], tower.getX(), tower.getY(), null);
 
+    }
+
+    public BufferedImage[] getTowerImg() {
+        return towerImg;
     }
 
     public void update() {

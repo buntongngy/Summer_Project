@@ -9,6 +9,7 @@ import main.Game;
 import managers.EnemyManager;
 import managers.TowerManager;
 import objects.PathPoint;
+import objects.Tower;
 import ui.ActionBar;
 
 public class Playing extends GameScene implements SceneMethods {
@@ -83,6 +84,10 @@ public class Playing extends GameScene implements SceneMethods {
 
 		int id = lvl[y / 32][x / 32];
 		return game.getTileManager().getTile(id).getTileType();
+	}
+
+	public TowerManager getTowerManager() {
+		return towerManager;
 	}
 
 	@Override
