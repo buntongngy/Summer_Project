@@ -15,6 +15,7 @@ public class ActionBar extends Bar {
 	private MyButton bMenu;
 	private MyButton[] towerBtn;
 	private Tower selectedTower;
+	private Tower displayTower;
 
 	public ActionBar(int x, int y, int width, int height, Playing playing) {
 		super(x, y, width, height);
@@ -60,6 +61,21 @@ public class ActionBar extends Bar {
 
 		// Buttons
 		drawButtons(g);
+		drawDisplayTower(g);
+	}
+
+	private void drawDisplayTower(Graphics g) {
+
+
+		if (displayTower != null) {
+			g.drawImage(playing.getTowerManager().getTowerImg()[displayTower.getTowerType()], 500, 700, 50, 50,null );
+		}
+	}
+
+	public void displayTower(Tower t) {
+
+		displayTower = t;
+
 	}
 
 	public void mouseClicked(int x, int y) {
@@ -110,5 +126,6 @@ public class ActionBar extends Bar {
 			b.resetBooleans();
 
 	}
+
 
 }
