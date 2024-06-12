@@ -3,11 +3,13 @@ package ui;
 import static main.GameStates.MENU;
 import static main.GameStates.SetGameState;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
+import helpz.Constants;
 import objects.Tower;
 import scenes.Playing;
+
+import static helpz.Constants.Towers;
 
 public class ActionBar extends Bar {
 
@@ -68,7 +70,16 @@ public class ActionBar extends Bar {
 
 
 		if (displayTower != null) {
-			g.drawImage(playing.getTowerManager().getTowerImg()[displayTower.getTowerType()], 500, 700, 50, 50,null );
+			g.drawImage(playing.getTowerManager().getTowerImg()[displayTower.getTowerType()], 420, 650, 50, 50,null );
+			g.setColor(Color.gray);
+			g.fillRect(410, 645, 220, 85);
+			g.setColor(Color.black);
+			g.drawRect(410,645,220,85);
+			g.drawRect(420,650,50,50);
+			g.drawImage(playing.getTowerManager().getTowerImg()[displayTower.getTowerType()], 420, 650, 50, 50, null );
+			g.setFont(new Font("LucidaSans", Font.BOLD, 15));
+			g.drawString("" + Towers.GetName(displayTower.getTowerType()), 490,660);
+			g.drawString("ID: " + displayTower.getId(), 490,675);
 		}
 	}
 
