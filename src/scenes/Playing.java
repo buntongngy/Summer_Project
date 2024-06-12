@@ -106,6 +106,14 @@ public class Playing extends GameScene implements SceneMethods {
 		return towerManager;
 	}
 
+	private boolean isTileGrass(int x, int y) {
+		int id = lvl[y/32][x/32];
+		int tileType = game.getTileManager().getTile(id).getTileType();
+
+		return tileType == GRASS_TILE;
+
+	}
+
 	@Override
 	public void mouseClicked(int x, int y) {
 		if (y >= 640)
@@ -113,19 +121,17 @@ public class Playing extends GameScene implements SceneMethods {
 		else {
 			if(selectedTower != null) {
 				if (isTileGrass(mouseX, mouseY)) {
-					towerManager.addTower(selectedTower, mouseX, mouseY);
-					selectedTower = null;
+					if (getTowerAt(mouseX, mouseY) == null){
+						towerManager.addTower(selectedTower, mouseX, mouseY);
+						selectedTower = null;
+					}
 				}
 			}
 		}
 	}
 
-	private boolean isTileGrass(int x, int y) {
-		int id = lvl[y/32][x/32];
-		int tileType = game.getTileManager().getTile(id).getTileType();
-
-		return tileType == GRASS_TILE;
-
+	private Tower getTowerAt(int x, int y) {
+		return towerManager.getTowerAt(x,y);
 	}
 
 	@Override
