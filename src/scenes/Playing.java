@@ -1,6 +1,7 @@
 package scenes;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -67,7 +68,13 @@ public class Playing extends GameScene implements SceneMethods {
 		enemyManager.draw(g);
 		towerManager.draw(g);
 		drawSelectedTower(g);
+		drawHighlight(g);
 
+	}
+
+	private void drawHighlight(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.drawRect(mouseX, mouseY, 32,32);
 	}
 
 	private void drawSelectedTower(Graphics g) {
@@ -135,6 +142,12 @@ public class Playing extends GameScene implements SceneMethods {
 
 	private Tower getTowerAt(int x, int y) {
 		return towerManager.getTowerAt(x,y);
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			selectedTower = null;
+		}
 	}
 
 	@Override
