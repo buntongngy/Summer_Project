@@ -1,5 +1,7 @@
 package helpz;
 
+import scenes.Playing;
+
 public class Constants {
 
 	public static class Towers {
@@ -17,6 +19,42 @@ public class Constants {
 					return "Wizard";
 			}
 			return "";
+		}
+
+		public static float GetStartDmg(int towerType) {
+			switch(towerType) {
+				case CANNON:
+					return 25;
+				case ARCHER:
+					return 10;
+				case WIZARD:
+					return 5;
+			}
+			return 0;
+		}
+
+		public static float GetDefaultRange(int towerType)  {
+			switch(towerType) {
+				case CANNON:
+					return 100;
+				case ARCHER:
+					return 200;
+				case WIZARD:
+					return 80;
+			}
+			return 0;
+		}
+
+		public static float GetDefaultCoolDown(int towerType) {
+			switch(towerType) {
+				case CANNON:
+					return 10;
+				case ARCHER:
+					return 5;
+				case WIZARD:
+					return 7;
+			}
+			return 0;
 		}
 	}
 
@@ -47,6 +85,22 @@ public class Constants {
 			}
 
 			return 0;
+		}
+
+		public static int GetStartHealth(int enemyType) {
+
+			switch (enemyType) {
+				case ORC:
+					return 100;
+				case BAT:
+					return 50;
+				case KNIGHT:
+					return 200;
+				case WOLF:
+					return 75;
+			}
+			return 0;
+
 		}
 	}
 	

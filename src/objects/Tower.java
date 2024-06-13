@@ -1,14 +1,32 @@
 package objects;
 
+import helpz.Constants;
+
 public class Tower {
 
     private int x, y, id, towerType;
+    private float dmg, range, coolDown;
 
     public Tower(int x, int y, int id, int towerType) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.towerType = towerType;
+        setDefaultDmg();
+        setDefaultRange();
+        setDefaultCoolDown();
+    }
+
+    private void setDefaultCoolDown() {
+        coolDown = Constants.Towers.GetDefaultCoolDown(towerType);
+    }
+
+    private void setDefaultRange() {
+        range = Constants.Towers.GetDefaultRange(towerType);
+    }
+
+    private void setDefaultDmg() {
+        dmg = Constants.Towers.GetStartDmg(towerType);
     }
 
     public int getX() {
@@ -26,5 +44,11 @@ public class Tower {
     public int getTowerType() {
         return towerType;
     }
+
+    public float getDmg() {return dmg; }
+
+    public float getRange() {return range;}
+
+    public float getCoolDown() {return coolDown;}
 
 }
