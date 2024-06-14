@@ -9,7 +9,7 @@ public abstract class Enemy {
 
 	private float x, y;
 	private Rectangle bounds;
-	private int health;
+	private int health, maxHealth;
 	private int ID;
 	private int enemyType;
 	private int lastDir;
@@ -21,10 +21,12 @@ public abstract class Enemy {
 		this.enemyType = enemyType;
 		bounds = new Rectangle((int) x, (int) y, 32, 32);
 		lastDir = -1;
+		setStartHealth();
 	}
 
-	protected void setStartHealth() {
+	private void setStartHealth() {
 		health = helpz.Constants.Enemies.GetStartHealth(enemyType);
+		maxHealth = health;
 	}
 
 	public void move(float speed, int dir) {
@@ -49,6 +51,10 @@ public abstract class Enemy {
 		// Don't use this one for moving the enemy.
 		this.x = x;
 		this.y = y;
+	}
+
+	public float getHealthBarFloat() {
+		return health/(float)maxHealth;
 	}
 
 	public float getX() {

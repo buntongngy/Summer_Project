@@ -1,6 +1,6 @@
 package managers;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -165,8 +165,16 @@ public class EnemyManager {
 	}
 
 	public void draw(Graphics g) {
-		for (Enemy e : enemies)
+		for (Enemy e : enemies) {
 			drawEnemy(e, g);
+			drawHealthBar(e, g);
+		}
+	}
+
+	private void drawHealthBar(Enemy e, Graphics g) {
+
+		g.setColor(Color.RED);
+		g.fillRect((int)e.getX(), (int)e.getY(), 32,3);
 
 	}
 
