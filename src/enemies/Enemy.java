@@ -7,12 +7,12 @@ import static helpz.Constants.Direction.*;
 
 public abstract class Enemy {
 
-	private float x, y;
-	private Rectangle bounds;
-	private int health, maxHealth;
-	private int ID;
-	private int enemyType;
-	private int lastDir;
+	protected float x, y;
+	protected Rectangle bounds;
+	protected int health, maxHealth;
+	protected int ID;
+	protected int enemyType;
+	protected int lastDir;
 
 	public Enemy(float x, float y, int ID, int enemyType) {
 		this.x = x;
