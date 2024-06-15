@@ -1,5 +1,6 @@
 package managers;
 
+import enemies.Enemy;
 import helpz.LoadSave;
 import objects.Tower;
 import scenes.Playing;
@@ -60,6 +61,26 @@ public class TowerManager {
 
     public void update() {
 
+        attackEnemyisClose();
+
+    }
+
+    private void attackEnemyisClose() {
+        for (Tower t : towers) {
+            for (Enemy e : playing.getEnemyManager().getEnemies()) {
+                if (e.isAlive() && isEnemyisRange(t, e)) {
+                    e.hurt(1);
+                }
+            }
+        }
+    }
+
+
+    private boolean isEnemyisRange(Tower t, Enemy e) {
+
+            int range = helpz.Utilz.GetDistance(t.getX(),t.getY(),e.getX(), e.getY());
+
+        return range < t.getRange();
     }
 
 
