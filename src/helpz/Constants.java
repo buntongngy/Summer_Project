@@ -4,6 +4,25 @@ import scenes.Playing;
 
 public class Constants {
 
+	public static class Projectile {
+		public static final int BOMB = 0;
+		public static final int ARROW = 1;
+		public static final int MAGIC = 2;
+
+		public static float GetSpeed(int type) {
+			switch (type) {
+				case BOMB :
+					return 1f;
+				case ARROW:
+					return 3f;
+				case MAGIC:
+					return 2;
+			}
+			return 0f;
+		}
+
+	}
+
 	public static class Towers {
 		public static final int CANNON = 0;
 		public static final int ARCHER = 1;
