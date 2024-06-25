@@ -4,8 +4,8 @@ import helpz.Constants;
 
 public class Tower {
 
-    private int x, y, id, towerType, cdTick;
-    private float dmg, range, coolDown;
+    private int x, y, id, towerType, cdTick,dmg;
+    private float range, coolDown;
 
     public Tower(int x, int y, int id, int towerType) {
         this.x = x;
@@ -49,7 +49,7 @@ public class Tower {
         return towerType;
     }
 
-    public float getDmg() {return dmg; }
+    public int getDmg() {return dmg; }
 
     public float getRange() {return range;}
 
