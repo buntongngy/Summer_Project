@@ -60,19 +60,29 @@ public class TowerManager {
     }
 
     public void update() {
+        for (Tower t : towers) {
+            t.update();
+            attackEnemyisClose(t);
+        }
 
-        attackEnemyisClose();
 
     }
 
-    private void attackEnemyisClose() {
-        for (Tower t : towers) {
+    private void attackEnemyisClose(Tower t) {
+
             for (Enemy e : playing.getEnemyManager().getEnemies()) {
-                if (e.isAlive() && isEnemyisRange(t, e)) {
-                    e.hurt(1);
+                if (e.isAlive()) {
+                  if (isEnemyisRange(t,e)) {
+                      if (t.isCoolDownOver()){
+                      playing.shootEnemy(t,e);
+                      t.resetCoolDown();
+                }
+                  }
+                }else {
+
                 }
             }
-        }
+
     }
 
 

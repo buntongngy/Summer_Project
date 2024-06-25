@@ -4,7 +4,7 @@ import helpz.Constants;
 
 public class Tower {
 
-    private int x, y, id, towerType;
+    private int x, y, id, towerType, cdTick;
     private float dmg, range, coolDown;
 
     public Tower(int x, int y, int id, int towerType) {
@@ -15,6 +15,10 @@ public class Tower {
         setDefaultDmg();
         setDefaultRange();
         setDefaultCoolDown();
+    }
+
+    public void update() {
+        cdTick++;
     }
 
     private void setDefaultCoolDown() {
@@ -50,5 +54,9 @@ public class Tower {
     public float getRange() {return range;}
 
     public float getCoolDown() {return coolDown;}
+
+    public boolean isCoolDownOver() {return cdTick  >= coolDown;}
+
+    public void resetCoolDown() {cdTick = 0;}
 
 }

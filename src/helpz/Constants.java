@@ -5,8 +5,8 @@ import scenes.Playing;
 public class Constants {
 
 	public static class Projectile {
-		public static final int BOMB = 0;
-		public static final int ARROW = 1;
+		public static final int ARROW = 0;
+		public static final int BOMB = 1;
 		public static final int MAGIC = 2;
 
 		public static float GetSpeed(int type) {
