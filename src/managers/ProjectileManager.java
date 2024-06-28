@@ -19,7 +19,8 @@ public class ProjectileManager {
 
 
     private Playing playing;
-    private ArrayList<Projectile> projectile = new ArrayList<Projectile>();
+    private ArrayList<Projectile> projectile = new ArrayList<>();
+    private ArrayList<Explosion> explosions = new ArrayList<>();
     private BufferedImage[] projectileImg, explosionImg;
     private Boolean drawBomb = false;
     private int bombTick, bombIndex;
@@ -110,36 +111,52 @@ public class ProjectileManager {
                 if(isProjectileHit(p)) {
                     p.setActive(false);
                     if(p.getProjectileType() == BOMB) {
-                        drawBomb = true;
-                        bombPos = p.getPos();
+                        explosions.add(new Explosion(p.getPos()));
+                        explodeOnEnemy(p);
                     }
                 } else {
 
                 }
             }
-        if (drawBomb) {
-            bombTick++;
-            if (bombTick >= 12) {
-                bombTick = 0;
-                bombIndex++;
-                if (bombIndex >= 7) {
-                    bombIndex = 0;
-                    drawBomb = false;
+        for (Explosion e : explosions)
+
+            if (e.getIndex()<7) {
+                e.update();
+
+            }
+
+    }
+
+    private void explodeOnEnemy(Projectile p) {
+
+        for(Enemy e : playing.getEnemyManager().getEnemies()){
+
+            if(e.isAlive()) {
+                float radius = 40.0f;
+
+                float xDist = Math.abs(p.getPos().x - e.getX());
+                float yDist = Math.abs(p.getPos().y - e.getY());
+
+                float realDist = (float) Math.hypot(xDist, yDist);
+
+                if (realDist <= radius) {
+                    e.hurt(p.getDmg());
                 }
             }
-        }
 
+        }
 
     }
 
     private boolean isProjectileHit(Projectile p) {
 
         for(Enemy e : playing.getEnemyManager().getEnemies()){
+            if(e.isAlive()) {
             if (e.getBounds().contains(p.getPos())) {
                 e.hurt(p.getDmg());
                 return true;
             }
-        }
+        }}
         return false;
 
     }
@@ -173,9 +190,37 @@ public class ProjectileManager {
 
     private void drawBomb(Graphics2D g2d) {
 
-        if(drawBomb) {
-            g2d.drawImage(explosionImg[bombIndex],(int)bombPos.x, (int)bombPos.y,null);
+       for(Explosion e: explosions)
+           if(e.getIndex() < 7) {
+                g2d.drawImage(explosionImg[e.getIndex()], (int)e.getPos().x - 16,(int)e.getPos().y - 16,null);
+           }
+    }
+
+    public class Explosion {
+
+        private Point2D.Float pos;
+        private int bombTick = 0, bombIndex = 0;
+        public Explosion(Point2D.Float pos) {
+            this.pos = pos;
         }
 
+        public void update() {
+
+                bombTick++;
+                if (bombTick >= 12) {
+                    bombTick = 0;
+                    bombIndex++;
+
+                }
+        }
+
+        public int getIndex() {
+            return bombIndex;
+        }
+
+        public Point2D.Float getPos() {
+            return pos;
+        }
     }
+
 }
