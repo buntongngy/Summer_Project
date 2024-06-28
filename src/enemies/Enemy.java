@@ -121,4 +121,8 @@ public abstract class Enemy {
 		return alive;
 	}
 
+	public boolean isSlow() {
+		return slowTick<slowTickLimit;
+	}
+
 }
