@@ -8,6 +8,7 @@ import objects.Tower;
 import scenes.Playing;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -20,6 +21,9 @@ public class ProjectileManager {
     private Playing playing;
     private ArrayList<Projectile> projectile = new ArrayList<Projectile>();
     private BufferedImage[] projectileImg, explosionImg;
+    private Boolean drawBomb = false;
+    private int bombTick, bombIndex;
+    private Point2D.Float bombPos;
 
     private int projectileId = 0;
 
@@ -105,10 +109,25 @@ public class ProjectileManager {
                 p.move();
                 if(isProjectileHit(p)) {
                     p.setActive(false);
+                    if(p.getProjectileType() == BOMB) {
+                        drawBomb = true;
+                        bombPos = p.getPos();
+                    }
                 } else {
 
                 }
             }
+        if (drawBomb) {
+            bombTick++;
+            if (bombTick >= 12) {
+                bombTick = 0;
+                bombIndex++;
+                if (bombIndex >= 7) {
+                    bombIndex = 0;
+                    drawBomb = false;
+                }
+            }
+        }
 
 
     }
@@ -135,7 +154,7 @@ public class ProjectileManager {
 
         }
 
-        for (Projectile p: projectile)
+        for (Projectile p: projectile) {
             if (p.isActive()) {
                 if (p.getProjectileType() == ARROW) {
                     g2d.translate(p.getPos().x, p.getPos().y);
@@ -145,8 +164,18 @@ public class ProjectileManager {
                     g2d.translate(-p.getPos().x, -p.getPos().y);
 
                 } else {
-                    g2d.drawImage(projectileImg[p.getProjectileType()], (int)p.getPos().x - 16, (int)p.getPos().y - 16, null);
+                    g2d.drawImage(projectileImg[p.getProjectileType()], (int) p.getPos().x - 16, (int) p.getPos().y - 16, null);
                 }
             }
+        }
+        drawBomb(g2d);
+    }
+
+    private void drawBomb(Graphics2D g2d) {
+
+        if(drawBomb) {
+            g2d.drawImage(explosionImg[bombIndex],(int)bombPos.x, (int)bombPos.y,null);
+        }
+
     }
 }
