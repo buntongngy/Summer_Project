@@ -19,15 +19,15 @@ public class ProjectileManager {
 
     private Playing playing;
     private ArrayList<Projectile> projectile = new ArrayList<Projectile>();
-    private BufferedImage[] projectileImg;
+    private BufferedImage[] projectileImg, explosionImg;
 
     private int projectileId = 0;
 
     public ProjectileManager(Playing playing) {
         this.playing = playing;
         importImg();
-    }
 
+    }
 
     private void importImg() {
 
@@ -37,7 +37,19 @@ public class ProjectileManager {
         for (int i = 0; i < 3; i++) {
             projectileImg[i] = atlas.getSubimage((7+i) * 32, 32, 32, 32);
         }
+        importExplosion(atlas);
     }
+
+    private void importExplosion(BufferedImage atlas) {
+
+        explosionImg = new BufferedImage[7];
+
+        for (int i = 0; i < 7; i++) {
+            explosionImg[i] = atlas.getSubimage(i*32, 32*2,32,32);
+        }
+
+    }
+
 
     public void newProjectile(Tower t, Enemy e) {
 
@@ -56,11 +68,18 @@ public class ProjectileManager {
        if (t.getY() > e.getY())
            ySpeed *= -1;
 
-       float arcValue = (int)Math.atan(yDist / (float)xDist);
-       float  rotate = (float) Math.toDegrees(arcValue);
+       float rotate = 0;
 
-       if (xDist < 0)
-           rotate += 180;
+       if (type == ARROW) {
+           float arcValue = (int)Math.atan(yDist / (float)xDist);
+             rotate = (float) Math.toDegrees(arcValue);
+           if (xDist < 0)
+               rotate += 180;
+       }
+
+
+
+
 
       projectile.add(new Projectile(t.getX() + 16, t.getY() + 16, xSpeed, ySpeed, t.getDmg(), rotate, projectileId++, type));
 
@@ -110,15 +129,24 @@ public class ProjectileManager {
 
         Graphics2D g2d = (Graphics2D) g;
 
+        for (int i=0; i <explosionImg.length;i++) {
+
+            g2d.drawImage(explosionImg[i], 300 + i * 32, 300, null);
+
+        }
+
         for (Projectile p: projectile)
             if (p.isActive()) {
-                g2d.translate(p.getPos().x, p.getPos().y);
-                g2d.rotate(Math.toRadians(90));
-                g2d.drawImage(projectileImg[p.getProjectileType()], -16, -16, null);
-                g2d.rotate(Math.toRadians(90));
-                g2d.translate(-p.getPos().x, -p.getPos().y);
+                if (p.getProjectileType() == ARROW) {
+                    g2d.translate(p.getPos().x, p.getPos().y);
+                    g2d.rotate(Math.toRadians(90));
+                    g2d.drawImage(projectileImg[p.getProjectileType()], -16, -16, null);
+                    g2d.rotate(Math.toRadians(90));
+                    g2d.translate(-p.getPos().x, -p.getPos().y);
 
+                } else {
+                    g2d.drawImage(projectileImg[p.getProjectileType()], (int)p.getPos().x - 16, (int)p.getPos().y - 16, null);
+                }
             }
-
     }
 }
