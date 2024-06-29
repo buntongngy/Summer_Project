@@ -11,6 +11,7 @@ import main.Game;
 import managers.EnemyManager;
 import managers.ProjectileManager;
 import managers.TowerManager;
+import managers.WaveManager;
 import objects.PathPoint;
 import objects.Tower;
 import ui.ActionBar;
@@ -27,6 +28,7 @@ public class Playing extends GameScene implements SceneMethods {
 	private EnemyManager enemyManager;
 	private TowerManager towerManager;
 	private ProjectileManager projectileManager;
+	private WaveManager waveManager;
 
 	private Tower selectedTower;
 	private PathPoint start, end;
@@ -41,6 +43,7 @@ public class Playing extends GameScene implements SceneMethods {
 		enemyManager = new EnemyManager(this, start, end);
 		towerManager = new TowerManager(this);
 		projectileManager = new ProjectileManager(this);
+		waveManager = new WaveManager(this);
 
 	}
 
@@ -60,6 +63,7 @@ public class Playing extends GameScene implements SceneMethods {
 		enemyManager.update();
 		towerManager.update();
 		projectileManager.update();
+		waveManager.update();
 	}
 
 	public void setSelectTower(Tower selectedTower) {
@@ -133,6 +137,18 @@ public class Playing extends GameScene implements SceneMethods {
 		projectileManager.newProjectile(t,e);
 	}
 
+	private Tower getTowerAt(int x, int y) {
+		return towerManager.getTowerAt(x,y);
+	}
+
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
+	}
+
+	public WaveManager getWaveManager() {
+		return waveManager;
+	}
+
 	@Override
 	public void mouseClicked(int x, int y) {
 		if (y >= 640)
@@ -152,13 +168,6 @@ public class Playing extends GameScene implements SceneMethods {
 		}
 	}
 
-	private Tower getTowerAt(int x, int y) {
-		return towerManager.getTowerAt(x,y);
-	}
-
-	public EnemyManager getEnemyManager() {
-		return enemyManager;
-	}
 
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
