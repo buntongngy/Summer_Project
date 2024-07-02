@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import enemies.Enemy;
+import helpz.Constants;
 import helpz.LoadSave;
 import main.Game;
 import managers.EnemyManager;
@@ -60,16 +61,81 @@ public class Playing extends GameScene implements SceneMethods {
 
 	public void update() {
 		updateTick();
+		waveManager.update();
 		enemyManager.update();
+
+		if(isAllEnemiesDead()) {
+			if(isTheremoreWave()) {
+				waveManager.startWaveTimer();
+				if(isWaveTimeOver()) {
+					waveManager.increaseWaveIndex();
+					enemyManager.getEnemies().clear();
+					waveManager.resetEnemyIndex();
+				}
+			}
+		}
+			
+
+		if(isTimeNewEnemy()) {
+			spawnEnemy();
+		}
+
+
 		towerManager.update();
 		projectileManager.update();
 		waveManager.update();
+	}
+
+	private boolean isWaveTimeOver() {
+
+		return waveManager.isWaveTimeOver();
+
+	}
+
+	private boolean isTheremoreWave() {
+
+		return waveManager.isTheremoreWave();
+
+	}
+
+	private boolean isAllEnemiesDead() {
+
+		if(waveManager.moreEnemyinWave()) {
+			return false;
+		}
+		for (Enemy e: enemyManager.getEnemies())
+			if(e.isAlive())
+				return false;
+
+		return true;
+
+	}
+
+	private void spawnEnemy() {
+
+		enemyManager.spawnEnemy(waveManager.getNextEnemy());
+	//	addEnemy(waveManager.getNextEnemy());
+
+	}
+
+	private boolean isTimeNewEnemy() {
+
+		if(waveManager.isTimeNewEnemy()) {
+			if(waveManager.moreEnemyinWave()) {
+				return true;
+			}
+
+		}
+
+		return false;
+
 	}
 
 	public void setSelectTower(Tower selectedTower) {
 
 		this.selectedTower = selectedTower;
 	}
+
 
 	@Override
 	public void render(Graphics g) {
