@@ -25,7 +25,7 @@ public class WaveManager {
     public void update() {
 
         if(enemySpawnTick<enemySpawnTickLimit)
-        enemySpawnTick++;
+            enemySpawnTick++;
 
         if(waveStartTimer) {
             waveTick++;
@@ -42,17 +42,13 @@ public class WaveManager {
     }
 
     public int getNextEnemy() {
-
         enemySpawnTick = 0;
-       return wave.get(waveIndex).getEnemyList().get(enemyIndex++);
-
+        return wave.get(waveIndex).getEnemyList().get(enemyIndex++);
     }
 
     private void createWave() {
-
-        wave.add(new Wave(new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,1))));
-        wave.add(new Wave(new ArrayList<Integer>(Arrays.asList(0,0,0,0,1,1,1,2,2,3))));
-
+        wave.add(new Wave(new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0,0,1))));
+        wave.add(new Wave(new ArrayList<>(Arrays.asList(0,0,0,0,1,1,1,2,2,3))));
     }
 
     public ArrayList<Wave> getWave() {
@@ -60,8 +56,7 @@ public class WaveManager {
     }
 
     public boolean isTimeNewEnemy() {
-
-            return enemySpawnTick >= enemySpawnTickLimit;
+        return enemySpawnTick >= enemySpawnTickLimit;
     }
 
     public void startWaveTimer() {
@@ -73,17 +68,27 @@ public class WaveManager {
     }
 
     public boolean isTheremoreWave() {
-        return waveIndex + 1< wave.size();
+        return waveIndex + 1 < wave.size();
+    }
+
+    public boolean isWaveTimeStart() {
+        return waveStartTimer;
     }
 
     public boolean isWaveTimeOver() {
-
         return waveTickTimerOver;
     }
 
     public void resetEnemyIndex() {
+        enemyIndex = 0;
+    }
 
-        enemyIndex =0;
+    public int getWaveIndex() {
+        return waveIndex;
+    }
 
+    public float getTimeLeft() {
+        float tickLeft = waveTickLimit - waveTick;
+        return tickLeft / 60.0f;
     }
 }

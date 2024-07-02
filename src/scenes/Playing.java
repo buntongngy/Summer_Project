@@ -74,17 +74,15 @@ public class Playing extends GameScene implements SceneMethods {
 				}
 			}
 		}
-			
 
 		if(isTimeNewEnemy()) {
 			spawnEnemy();
 		}
 
-
 		towerManager.update();
 		projectileManager.update();
-		waveManager.update();
 	}
+
 
 	private boolean isWaveTimeOver() {
 
@@ -147,6 +145,12 @@ public class Playing extends GameScene implements SceneMethods {
 		projectileManager.draw(g);
 		drawSelectedTower(g);
 		drawHighlight(g);
+		drawWaveInfo(g);
+
+	}
+
+	private void drawWaveInfo(Graphics g) {
+
 
 	}
 

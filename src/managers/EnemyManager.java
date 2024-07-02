@@ -220,5 +220,13 @@ public class EnemyManager {
 		return enemies;
 	}
 
+	public int getAmountOfAliveEnemies() {
+		int size = 0;
+		for(Enemy e: enemies)
+			if(e.isAlive())
+				size++;
+		return size;
+	}
+
 
 }
