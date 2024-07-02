@@ -89,6 +89,13 @@ public abstract class Enemy {
 
 	}
 
+	public void killEnemies() {
+
+		alive = false;
+		health =0;
+
+	}
+
 	public float getX() {
 		return x;
 	}
@@ -124,5 +131,6 @@ public abstract class Enemy {
 	public boolean isSlow() {
 		return slowTick<slowTickLimit;
 	}
+
 
 }

@@ -105,7 +105,7 @@ public class EnemyManager {
 			e.move(GetSPEED(e.getEnemyType()), e.getLastDir());
 		} else if (isAtEnd(e)) {
 			System.out.println("Lives Lost!");
-
+			e.killEnemies();
 		} else {
 			setNewDirectionAndMove(e);
 		}
