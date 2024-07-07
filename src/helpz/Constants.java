@@ -40,6 +40,18 @@ public class Constants {
 			return "";
 		}
 
+		public static int GetTowerCost(int towerType) {
+			switch(towerType) {
+				case CANNON:
+					return 65;
+				case ARCHER:
+					return 30;
+				case WIZARD:
+					return 15;
+			}
+			return 0;
+		}
+
 		public static int GetStartDmg(int towerType) {
 			switch(towerType) {
 				case CANNON:

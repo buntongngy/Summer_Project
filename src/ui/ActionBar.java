@@ -24,6 +24,7 @@ public class ActionBar extends Bar {
 
 	private int gold = 100;
 	private boolean showTowerCost = false;
+	private int towerCostType;
 
 	private DecimalFormat formatter ;
 
@@ -89,8 +90,20 @@ public class ActionBar extends Bar {
 		g.setColor(Color.black);
 		g.drawRect(280, 650, 120, 50);
 
-		g.drawString("Wizard", 285, 670);
-		g.drawString("Cost: " + 50 + "g", 285, 695);
+		g.drawString("" + getTowerName(), 285, 670);
+		g.drawString("Cost: " + getTowerCost() + "g", 285, 695);
+
+	}
+
+	private String getTowerName() {
+
+		return Constants.Towers.GetName(towerCostType);
+
+	}
+
+	private int getTowerCost() {
+
+		return Constants.Towers.GetTowerCost(towerCostType);
 
 	}
 
@@ -192,9 +205,11 @@ public class ActionBar extends Bar {
 			bMenu.setMouseOver(true);
 		else {
 			for (MyButton b: towerBtn)
-				if (b.getBounds().contains(x,y))
+				if (b.getBounds().contains(x,y)) {
 					b.setMouseOver(true);
 					showTowerCost = true;
+					towerCostType = b.getId();
+				}
 			return;
 		}
 
