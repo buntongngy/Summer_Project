@@ -23,6 +23,7 @@ public class ActionBar extends Bar {
 	private Tower displayTower;
 
 	private int gold = 100;
+	private boolean showTowerCost = false;
 
 	private DecimalFormat formatter ;
 
@@ -76,6 +77,21 @@ public class ActionBar extends Bar {
 		drawWaveInfo(g);
 		
 		drawGoldAmount(g);
+
+		if(showTowerCost)
+		drawTowerCost(g);
+	}
+
+	private void drawTowerCost(Graphics g) {
+
+		g.setColor(Color.gray);
+		g.fillRect(280, 650, 120, 50);
+		g.setColor(Color.black);
+		g.drawRect(280, 650, 120, 50);
+
+		g.drawString("Wizard", 285, 670);
+		g.drawString("Cost: " + 50 + "g", 285, 695);
+
 	}
 
 	private void drawGoldAmount(Graphics g) {
@@ -169,6 +185,7 @@ public class ActionBar extends Bar {
 
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
+		showTowerCost =false;
 		for (MyButton b: towerBtn)
 			b.setMouseOver(false);
 		if (bMenu.getBounds().contains(x, y))
@@ -177,6 +194,7 @@ public class ActionBar extends Bar {
 			for (MyButton b: towerBtn)
 				if (b.getBounds().contains(x,y))
 					b.setMouseOver(true);
+					showTowerCost = true;
 			return;
 		}
 
