@@ -22,6 +22,8 @@ public class ActionBar extends Bar {
 	private Tower selectedTower;
 	private Tower displayTower;
 
+	private int gold = 100;
+
 	private DecimalFormat formatter ;
 
 	public ActionBar(int x, int y, int width, int height, Playing playing) {
@@ -72,9 +74,18 @@ public class ActionBar extends Bar {
 		drawDisplayTower(g);
 
 		drawWaveInfo(g);
+		
+		drawGoldAmount(g);
+	}
+
+	private void drawGoldAmount(Graphics g) {
+
+		g.drawString("Gold: " + gold, 110, 725);
+
 	}
 
 	private void drawWaveInfo(Graphics g) {
+		g.setColor(Color.black);
 		g.setFont(new Font("LucidaSans", Font.BOLD, 20));
 		drawWaveTimerInfo(g);
 		drawEnemiesLeftInfo(g);
@@ -85,22 +96,22 @@ public class ActionBar extends Bar {
 	private void drawWavesLeftInfo(Graphics g) {
 		int current = playing.getWaveManager().getWaveIndex();
 		int size = playing.getWaveManager().getWave().size();
-		g.drawString("Wave " + (current + 1) + " / " + size, 425, 690);
+		g.drawString("Wave " + (current + 1) + " / " + size, 425, 770);
 
 	}
 
 	private void drawEnemiesLeftInfo(Graphics g) {
 		int remaining = playing.getEnemyManager().getAmountOfAliveEnemies();
-		g.drawString("Enemies Left: " + remaining, 425, 720);
+		g.drawString("Enemies Left: " + remaining, 425, 790);
 	}
 
 	private void drawWaveTimerInfo(Graphics g) {
 		if (playing.getWaveManager().isWaveTimeStart()) {
 
-			g.setColor(Color.black);
+
 			float timeLeft = playing.getWaveManager().getTimeLeft();
 			String formattedText = formatter.format(timeLeft);
-			g.drawString("Time Left: " + formattedText, 425, 660);
+			g.drawString("Time Left: " + formattedText, 425, 750);
 		}
 	}
 
