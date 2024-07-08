@@ -24,7 +24,7 @@ public class Playing extends GameScene implements SceneMethods {
 
 	private int[][] lvl;
 	private ActionBar actionBar;
-	private int mouseX, mouseY;
+	private int mouseX, mouseY, goldTick;
 
 	private EnemyManager enemyManager;
 	private TowerManager towerManager;
@@ -63,6 +63,11 @@ public class Playing extends GameScene implements SceneMethods {
 		updateTick();
 		waveManager.update();
 		enemyManager.update();
+
+		goldTick++;
+		if(goldTick % (60*3) == 0) {
+			actionBar.addGold(1);
+		}
 
 		if(isAllEnemiesDead()) {
 			if(isTheremoreWave()) {
