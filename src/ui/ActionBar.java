@@ -183,6 +183,12 @@ public class ActionBar extends Bar {
 
 	}
 
+	public void payForTower(int towerType) {
+
+		this.gold -= Constants.Towers.GetTowerCost(towerType);
+
+	}
+
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y))
 			SetGameState(MENU);
