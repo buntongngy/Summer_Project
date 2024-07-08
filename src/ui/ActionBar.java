@@ -95,7 +95,8 @@ public class ActionBar extends Bar {
 
 		if(isEnoughGoldForTower()) {
 
-			g.drawString("Not enough gold", 285, 725);
+			g.setColor(Color.RED);
+			g.drawString("Can't Afford", 270, 725);
 
 		}
 
@@ -220,6 +221,12 @@ public class ActionBar extends Bar {
 
 	}
 
+	public void addGold(int getReward) {
+
+			this.gold += getReward;
+
+	}
+
 	private boolean isEnoughGold(int towerType) {
 
 		return gold >= Constants.Towers.GetTowerCost(towerType);
@@ -265,6 +272,7 @@ public class ActionBar extends Bar {
 			b.resetBooleans();
 
 	}
+
 
 
 }

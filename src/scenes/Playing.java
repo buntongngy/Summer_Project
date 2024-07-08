@@ -219,6 +219,10 @@ public class Playing extends GameScene implements SceneMethods {
 		return waveManager;
 	}
 
+	public void rewardPlayer(int enemyType) {
+		actionBar.addGold(Constants.Enemies.GetReward(enemyType));
+	}
+
 	@Override
 	public void mouseClicked(int x, int y) {
 		if (y >= 640)

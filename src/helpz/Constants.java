@@ -103,8 +103,24 @@ public class Constants {
 		public static final int KNIGHT = 2;
 		public static final int WOLF = 3;
 
-		public static float GetSPEED(int enemyTYpe) {
-			switch (enemyTYpe) {
+		public static int GetReward(int enemyType) {
+
+			switch (enemyType) {
+				case ORC:
+					return 10;
+				case BAT:
+					return 5;
+				case KNIGHT:
+					return 25;
+				case WOLF:
+					return 15;
+			}
+			return 0;
+
+		}
+
+		public static float GetSPEED(int enemyType) {
+			switch (enemyType) {
 				case ORC:
 					return 0.5f;
 				case BAT:

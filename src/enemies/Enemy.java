@@ -1,12 +1,14 @@
 package enemies;
 
 import helpz.Constants;
+import managers.EnemyManager;
 
 import java.awt.Rectangle;
 import static helpz.Constants.Direction.*;
 
 public abstract class Enemy {
 
+	protected EnemyManager enemyManager;
 	protected float x, y;
 	protected Rectangle bounds;
 	protected int health, maxHealth;
@@ -17,11 +19,12 @@ public abstract class Enemy {
 	protected int slowTickLimit = 120;
 	protected int slowTick = slowTickLimit;
 
-	public Enemy(float x, float y, int ID, int enemyType) {
+	public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager) {
 		this.x = x;
 		this.y = y;
 		this.ID = ID;
 		this.enemyType = enemyType;
+		this.enemyManager = enemyManager;
 		bounds = new Rectangle((int) x, (int) y, 32, 32);
 		lastDir = -1;
 		setStartHealth();
@@ -36,7 +39,11 @@ public abstract class Enemy {
 		this.health -= dmg;
 		if (health <= 0) {
 			alive = false;
+			enemyManager.rewardPlayer(enemyType);
 		}
+
+
+
 	}
 
 	public void move(float speed, int dir) {
