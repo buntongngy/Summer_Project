@@ -93,6 +93,18 @@ public class ActionBar extends Bar {
 		g.drawString("" + getTowerName(), 285, 670);
 		g.drawString("Cost: " + getTowerCost() + "g", 285, 695);
 
+		if(isEnoughGoldForTower()) {
+
+			g.drawString("Not enough gold", 285, 725);
+
+		}
+
+	}
+
+	private boolean isEnoughGoldForTower() {
+
+		return getTowerCost() > gold;
+
 	}
 
 	private String getTowerName() {
@@ -190,15 +202,27 @@ public class ActionBar extends Bar {
 	}
 
 	public void mouseClicked(int x, int y) {
-		if (bMenu.getBounds().contains(x, y))
+		if (bMenu.getBounds().contains(x, y)) {
 			SetGameState(MENU);
-		else {
-			for(MyButton b:towerBtn)
-				if (b.getBounds().contains(x,y))
-					selectedTower = new Tower(0,0,-1,b.getId());
-			playing.setSelectTower(selectedTower);
-			return;
 		}
+		else {
+			for(MyButton b:towerBtn){
+				if (b.getBounds().contains(x,y)) {
+					if (!isEnoughGold(b.getId())) {
+						return;
+					}
+					selectedTower = new Tower(0, 0, -1, b.getId());
+					playing.setSelectTower(selectedTower);
+					return;
+				}
+				}
+		}
+
+	}
+
+	private boolean isEnoughGold(int towerType) {
+
+		return gold >= Constants.Towers.GetTowerCost(towerType);
 
 	}
 
