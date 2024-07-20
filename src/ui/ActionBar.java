@@ -21,6 +21,7 @@ public class ActionBar extends Bar {
 	private MyButton[] towerBtn;
 	private Tower selectedTower;
 	private Tower displayTower;
+	private MyButton sellTower, upgradeTower;
 
 	private int gold = 100;
 	private boolean showTowerCost = false;
@@ -50,6 +51,9 @@ public class ActionBar extends Bar {
 		for (int i = 0; i < towerBtn.length;i++) {
 			towerBtn[i] = new MyButton("", xStart + xOffset * i, yStart, w,h,i);
 		}
+
+		sellTower = new MyButton("Sell", 420, 702, 80,25);
+		upgradeTower = new MyButton("Upgrade",545,702, 80,25);
 
 	}
 
@@ -175,6 +179,12 @@ public class ActionBar extends Bar {
 
 			drawSelectedTowerBorder(g);
 			drawDisplayTowerRange(g);
+
+			sellTower.draw(g);
+			upgradeTower.draw(g);
+
+
+
 		}
 	}
 
