@@ -215,11 +215,29 @@ public class ActionBar extends Bar {
 
 	}
 
+	public void sellTowerClick() {
+		playing.removeTower(displayTower);
+		displayTower = null;
+
+	}
+
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			SetGameState(MENU);
 		}
 		else {
+
+			if (displayTower != null) {
+
+					if(sellTower.getBounds().contains(x,y)) {
+						sellTowerClick();
+						return;
+					} else if (upgradeTower.getBounds().contains(x,y)) {
+						upgradeTower.setMousePressed(true);
+						return;
+				}
+			}
+
 			for(MyButton b:towerBtn){
 				if (b.getBounds().contains(x,y)) {
 					if (!isEnoughGold(b.getId())) {

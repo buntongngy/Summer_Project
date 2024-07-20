@@ -200,6 +200,12 @@ public class Playing extends GameScene implements SceneMethods {
 		return towerManager;
 	}
 
+	public void removeTower(Tower displayTower) {
+
+		towerManager.removeTower(displayTower);
+
+	}
+
 	private boolean isTileGrass(int x, int y) {
 		int id = lvl[y/32][x/32];
 		int tileType = game.getTileManager().getTile(id).getTileType();
@@ -290,6 +296,7 @@ public class Playing extends GameScene implements SceneMethods {
 	public void mouseDragged(int x, int y) {
 
 	}
+
 
 
 }

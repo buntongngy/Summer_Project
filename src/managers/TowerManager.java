@@ -29,6 +29,18 @@ public class TowerManager {
         towers.add(new Tower(xPos,yPos,towerAcc++, selectedTower.getTowerType()));
     }
 
+    public void removeTower(Tower displayTower) {
+
+        for(int i =0; i <towers.size(); i++) {
+
+            if(towers.get(i).getId() == displayTower.getId()) {
+                towers.remove(i);
+            }
+
+        }
+
+    }
+
     private void loadTowerImg() {
 
         BufferedImage atlas = LoadSave.getSpriteAtlas();
@@ -92,6 +104,7 @@ public class TowerManager {
 
         return range < t.getRange();
     }
+
 
 
 }
