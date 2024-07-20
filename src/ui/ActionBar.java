@@ -186,9 +186,28 @@ public class ActionBar extends Bar {
 			upgradeTower.draw(g);
 			drawButtonFeedback(g, upgradeTower);
 
+			if(sellTower.isMouseOver()) {
+				g.drawString("Sell for: " + getSellAmount(displayTower) + "g", 490, 700);
+			} else if (upgradeTower.isMouseOver()) {
+
+				g.drawString("Upgrade for: " + getUpgradeAmount(displayTower) + "g", 490, 700);
+
+			}
 
 
 		}
+	}
+
+	private int getSellAmount(Tower displayTower) {
+
+		return Constants.Towers.GetTowerCost(displayTower.getTowerType());
+
+	}
+
+	private int getUpgradeAmount(Tower displayTower) {
+
+		return 50;
+
 	}
 
 	private void drawDisplayTowerRange(Graphics g) {
