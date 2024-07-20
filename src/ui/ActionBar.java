@@ -181,7 +181,10 @@ public class ActionBar extends Bar {
 			drawDisplayTowerRange(g);
 
 			sellTower.draw(g);
+			drawButtonFeedback(g,sellTower);
+
 			upgradeTower.draw(g);
+			drawButtonFeedback(g, upgradeTower);
 
 
 
@@ -246,11 +249,26 @@ public class ActionBar extends Bar {
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
 		showTowerCost =false;
+		sellTower.setMouseOver(false);
+		upgradeTower.setMouseOver(false);
+
+
 		for (MyButton b: towerBtn)
 			b.setMouseOver(false);
 		if (bMenu.getBounds().contains(x, y))
 			bMenu.setMouseOver(true);
 		else {
+
+			if(displayTower != null) {
+				if(sellTower.getBounds().contains(x,y)) {
+					sellTower.setMouseOver(true);
+					return;
+				} else if (upgradeTower.getBounds().contains(x,y)) {
+					upgradeTower.setMouseOver(true);
+					return;
+				}
+			}
+
 			for (MyButton b: towerBtn)
 				if (b.getBounds().contains(x,y)) {
 					b.setMouseOver(true);
@@ -267,6 +285,17 @@ public class ActionBar extends Bar {
 		if (bMenu.getBounds().contains(x, y))
 			bMenu.setMousePressed(true);
 		else {
+
+			if(displayTower != null) {
+				if(sellTower.getBounds().contains(x,y)) {
+					sellTower.setMousePressed(true);
+					return;
+				} else if (upgradeTower.getBounds().contains(x,y)) {
+					upgradeTower.setMousePressed(true);
+					return;
+				}
+			}
+
 			for (MyButton b: towerBtn)
 				if(b.getBounds().contains(x,y)) {
 					b.setMousePressed(true);
@@ -280,6 +309,9 @@ public class ActionBar extends Bar {
 
 		for (MyButton b : towerBtn)
 			b.resetBooleans();
+
+		sellTower.resetBooleans();
+		upgradeTower.resetBooleans();
 
 	}
 
