@@ -217,6 +217,8 @@ public class ActionBar extends Bar {
 
 	public void sellTowerClick() {
 		playing.removeTower(displayTower);
+		gold += Constants.Towers.GetTowerCost(displayTower.getTowerType()) /2;
+
 		displayTower = null;
 
 	}
