@@ -187,10 +187,12 @@ public class ActionBar extends Bar {
 			drawButtonFeedback(g, upgradeTower);
 
 			if(sellTower.isMouseOver()) {
-				g.drawString("Sell for: " + getSellAmount(displayTower) + "g", 490, 700);
+				g.setColor(Color.red);
+				g.drawString("Sell for: " + getSellAmount(displayTower) /2+ "g", 490, 690);
 			} else if (upgradeTower.isMouseOver()) {
 
-				g.drawString("Upgrade for: " + getUpgradeAmount(displayTower) + "g", 490, 700);
+				g.setColor(Color.green);
+				g.drawString("Upgrade for: " + getUpgradeAmount(displayTower) + "g", 490, 690);
 
 			}
 
@@ -206,7 +208,7 @@ public class ActionBar extends Bar {
 
 	private int getUpgradeAmount(Tower displayTower) {
 
-		return 50;
+		return (int) (Constants.Towers.GetTowerCost(displayTower.getTowerType()) * 0.3f);
 
 	}
 
@@ -242,6 +244,10 @@ public class ActionBar extends Bar {
 
 	}
 
+	public void upgradeTowerClick() {
+		playing.upgradeTower(displayTower);
+	}
+
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			SetGameState(MENU);
@@ -254,7 +260,7 @@ public class ActionBar extends Bar {
 						sellTowerClick();
 						return;
 					} else if (upgradeTower.getBounds().contains(x,y)) {
-						upgradeTower.setMousePressed(true);
+						upgradeTowerClick();
 						return;
 				}
 			}

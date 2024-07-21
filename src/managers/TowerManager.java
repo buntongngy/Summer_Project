@@ -41,6 +41,16 @@ public class TowerManager {
 
     }
 
+    public void upgradeTower(Tower displayTower) {
+
+        for (Tower t: towers) {
+            if (t.getId() == displayTower.getId()) {
+                t.upgradeTower();
+            }
+        }
+
+    }
+
     private void loadTowerImg() {
 
         BufferedImage atlas = LoadSave.getSpriteAtlas();

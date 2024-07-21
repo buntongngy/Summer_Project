@@ -206,6 +206,12 @@ public class Playing extends GameScene implements SceneMethods {
 
 	}
 
+	public void upgradeTower(Tower displayTower) {
+
+		towerManager.upgradeTower(displayTower);
+
+	}
+
 	private boolean isTileGrass(int x, int y) {
 		int id = lvl[y/32][x/32];
 		int tileType = game.getTileManager().getTile(id).getTileType();
