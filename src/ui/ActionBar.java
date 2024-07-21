@@ -176,6 +176,7 @@ public class ActionBar extends Bar {
 			g.setFont(new Font("LucidaSans", Font.BOLD, 15));
 			g.drawString("" + Towers.GetName(displayTower.getTowerType()), 490,660);
 			g.drawString("ID: " + displayTower.getId(), 490,675);
+			g.drawString("Tier: " + displayTower.getTier(), 560, 660);
 
 			drawSelectedTowerBorder(g);
 			drawDisplayTowerRange(g);
@@ -183,7 +184,7 @@ public class ActionBar extends Bar {
 			sellTower.draw(g);
 			drawButtonFeedback(g,sellTower);
 
-			if (displayTower.getTier() < 3) {
+			if (displayTower.getTier() < 3 && gold >= getUpgradeAmount(displayTower)) {
 				upgradeTower.draw(g);
 				drawButtonFeedback(g, upgradeTower);
 			}
@@ -191,7 +192,7 @@ public class ActionBar extends Bar {
 			if(sellTower.isMouseOver()) {
 				g.setColor(Color.red);
 				g.drawString("Sell for: " + getSellAmount(displayTower) /2+ "g", 490, 690);
-			} else if (upgradeTower.isMouseOver()) {
+			} else if (upgradeTower.isMouseOver() && gold >= getUpgradeAmount(displayTower)) {
 
 				g.setColor(Color.green);
 				g.drawString("Upgrade for: " + getUpgradeAmount(displayTower) + "g", 490, 690);
@@ -204,7 +205,11 @@ public class ActionBar extends Bar {
 
 	private int getSellAmount(Tower displayTower) {
 
-		return Constants.Towers.GetTowerCost(displayTower.getTowerType());
+		int upgradeCost = (displayTower.getTier() - 1) * getUpgradeAmount(displayTower);
+		upgradeCost *= 0.5f;
+
+		return Constants.Towers.GetTowerCost(displayTower.getTowerType()) + upgradeCost;
+
 
 	}
 
@@ -242,12 +247,19 @@ public class ActionBar extends Bar {
 		playing.removeTower(displayTower);
 		gold += Constants.Towers.GetTowerCost(displayTower.getTowerType()) /2;
 
+		int upgradeCost = (displayTower.getTier() - 1) * getUpgradeAmount(displayTower);
+		upgradeCost *= 0.5f;
+
+		gold += upgradeCost;
+
 		displayTower = null;
 
 	}
 
 	public void upgradeTowerClick() {
 		playing.upgradeTower(displayTower);
+		gold -= getUpgradeAmount(displayTower);
+
 	}
 
 	public void mouseClicked(int x, int y) {
@@ -261,7 +273,7 @@ public class ActionBar extends Bar {
 					if(sellTower.getBounds().contains(x,y)) {
 						sellTowerClick();
 						return;
-					} else if (upgradeTower.getBounds().contains(x,y) && displayTower.getTier() < 3) {
+					} else if (upgradeTower.getBounds().contains(x,y) && displayTower.getTier() < 3 && gold >= getUpgradeAmount(displayTower)) {
 						upgradeTowerClick();
 						return;
 				}
