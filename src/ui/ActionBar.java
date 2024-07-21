@@ -183,8 +183,10 @@ public class ActionBar extends Bar {
 			sellTower.draw(g);
 			drawButtonFeedback(g,sellTower);
 
-			upgradeTower.draw(g);
-			drawButtonFeedback(g, upgradeTower);
+			if (displayTower.getTier() < 3) {
+				upgradeTower.draw(g);
+				drawButtonFeedback(g, upgradeTower);
+			}
 
 			if(sellTower.isMouseOver()) {
 				g.setColor(Color.red);
@@ -259,7 +261,7 @@ public class ActionBar extends Bar {
 					if(sellTower.getBounds().contains(x,y)) {
 						sellTowerClick();
 						return;
-					} else if (upgradeTower.getBounds().contains(x,y)) {
+					} else if (upgradeTower.getBounds().contains(x,y) && displayTower.getTier() < 3) {
 						upgradeTowerClick();
 						return;
 				}
@@ -308,7 +310,7 @@ public class ActionBar extends Bar {
 				if(sellTower.getBounds().contains(x,y)) {
 					sellTower.setMouseOver(true);
 					return;
-				} else if (upgradeTower.getBounds().contains(x,y)) {
+				} else if (upgradeTower.getBounds().contains(x,y) && displayTower.getTier()  < 3) {
 					upgradeTower.setMouseOver(true);
 					return;
 				}
@@ -335,7 +337,7 @@ public class ActionBar extends Bar {
 				if(sellTower.getBounds().contains(x,y)) {
 					sellTower.setMousePressed(true);
 					return;
-				} else if (upgradeTower.getBounds().contains(x,y)) {
+				} else if (upgradeTower.getBounds().contains(x,y) && displayTower.getTier() < 3) {
 					upgradeTower.setMousePressed(true);
 					return;
 				}
