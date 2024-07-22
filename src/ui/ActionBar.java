@@ -87,6 +87,10 @@ public class ActionBar extends Bar {
 
 		if(showTowerCost)
 		drawTowerCost(g);
+
+		if(playing.isGamePause())
+			g.setColor(Color.GRAY);
+			g.drawString("Game Pause", 50,750);
 	}
 
 	private void drawTowerCost(Graphics g) {
@@ -266,15 +270,14 @@ public class ActionBar extends Bar {
 
 	private void togglePause() {
 
-//		playing.setGamePause(true);
-//
-//		if (playing.isGamePause()) {
-//			playing.setGamePause(false);
-//		} else {
-//			playing.setGamePause(true);
-//		}
-
 		playing.setGamePause(!playing.isGamePause());
+
+		if(playing.isGamePause()) {
+			bPause.setText("Unpause");
+		} else  {
+			bPause.setText("Pause");
+		}
+
 
 	}
 
