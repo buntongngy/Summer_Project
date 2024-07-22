@@ -264,9 +264,27 @@ public class ActionBar extends Bar {
 
 	}
 
+	private void togglePause() {
+
+//		playing.setGamePause(true);
+//
+//		if (playing.isGamePause()) {
+//			playing.setGamePause(false);
+//		} else {
+//			playing.setGamePause(true);
+//		}
+
+		playing.setGamePause(!playing.isGamePause());
+
+	}
+
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			SetGameState(MENU);
+		} else if (bPause.getBounds().contains(x,y)) {
+
+			togglePause();
+
 		}
 		else {
 
@@ -294,6 +312,8 @@ public class ActionBar extends Bar {
 		}
 
 	}
+
+
 
 	public void addGold(int getReward) {
 

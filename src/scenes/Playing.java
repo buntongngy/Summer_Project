@@ -25,6 +25,7 @@ public class Playing extends GameScene implements SceneMethods {
 	private int[][] lvl;
 	private ActionBar actionBar;
 	private int mouseX, mouseY, goldTick;
+	private boolean gamePause = false;
 
 	private EnemyManager enemyManager;
 	private TowerManager towerManager;
@@ -60,32 +61,35 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 
 	public void update() {
-		updateTick();
-		waveManager.update();
-		enemyManager.update();
 
-		goldTick++;
-		if(goldTick % (60*3) == 0) {
-			actionBar.addGold(1);
-		}
+		if (!gamePause) {
+			updateTick();
+			waveManager.update();
+			enemyManager.update();
 
-		if(isAllEnemiesDead()) {
-			if(isTheremoreWave()) {
-				waveManager.startWaveTimer();
-				if(isWaveTimeOver()) {
-					waveManager.increaseWaveIndex();
-					enemyManager.getEnemies().clear();
-					waveManager.resetEnemyIndex();
+			goldTick++;
+			if (goldTick % (60 * 3) == 0) {
+				actionBar.addGold(1);
+			}
+
+			if (isAllEnemiesDead()) {
+				if (isTheremoreWave()) {
+					waveManager.startWaveTimer();
+					if (isWaveTimeOver()) {
+						waveManager.increaseWaveIndex();
+						enemyManager.getEnemies().clear();
+						waveManager.resetEnemyIndex();
+					}
 				}
 			}
-		}
 
-		if(isTimeNewEnemy()) {
-			spawnEnemy();
-		}
+			if (isTimeNewEnemy()) {
+				spawnEnemy();
+			}
 
-		towerManager.update();
-		projectileManager.update();
+			towerManager.update();
+			projectileManager.update();
+		}
 	}
 
 
@@ -228,16 +232,14 @@ public class Playing extends GameScene implements SceneMethods {
 		return towerManager.getTowerAt(x,y);
 	}
 
-	public EnemyManager getEnemyManager() {
-		return enemyManager;
-	}
 
-	public WaveManager getWaveManager() {
-		return waveManager;
-	}
 
 	public void rewardPlayer(int enemyType) {
 		actionBar.addGold(Constants.Enemies.GetReward(enemyType));
+	}
+
+	public void setGamePause(boolean gamePause) {
+		this.gamePause = gamePause;
 	}
 
 	@Override
@@ -278,7 +280,7 @@ public class Playing extends GameScene implements SceneMethods {
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		if (y >= 640)
+		if (y >= 640 && !gamePause)
 			actionBar.mouseMoved(x, y);
 		else {
 			mouseX = (x / 32) * 32;
@@ -288,7 +290,7 @@ public class Playing extends GameScene implements SceneMethods {
 
 	@Override
 	public void mousePressed(int x, int y) {
-		if (y >= 640) {
+		if (y >= 640 && !gamePause) {
 			actionBar.mousePressed(x, y);
 		}
 	}
@@ -301,6 +303,18 @@ public class Playing extends GameScene implements SceneMethods {
 	@Override
 	public void mouseDragged(int x, int y) {
 
+	}
+
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
+	}
+
+	public WaveManager getWaveManager() {
+		return waveManager;
+	}
+
+	public boolean isGamePause() {
+		return gamePause;
 	}
 
 
