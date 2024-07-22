@@ -17,7 +17,7 @@ import static helpz.Constants.Towers;
 public class ActionBar extends Bar {
 
 	private Playing playing;
-	private MyButton bMenu;
+	private MyButton bMenu, bPause;
 	private MyButton[] towerBtn;
 	private Tower selectedTower;
 	private Tower displayTower;
@@ -40,6 +40,7 @@ public class ActionBar extends Bar {
 	private void initButtons() {
 
 		bMenu = new MyButton("Menu", 2, 642, 100, 30);
+		bPause = new MyButton("Pause", 2, 680, 100, 30);
 
 		towerBtn = new MyButton[3];
 		int w = 50;
@@ -59,6 +60,7 @@ public class ActionBar extends Bar {
 
 	private void drawButtons(Graphics g) {
 		bMenu.draw(g);
+		bPause.draw(g);
 
 		for (MyButton b : towerBtn) {
 			g.setColor(Color.lightGray);
@@ -307,16 +309,22 @@ public class ActionBar extends Bar {
 
 	public void mouseMoved(int x, int y) {
 		bMenu.setMouseOver(false);
-		showTowerCost =false;
+		bPause.setMouseOver(false);
+
+		showTowerCost = false;
 		sellTower.setMouseOver(false);
 		upgradeTower.setMouseOver(false);
 
 
-		for (MyButton b: towerBtn)
+		for (MyButton b : towerBtn)
 			b.setMouseOver(false);
-		if (bMenu.getBounds().contains(x, y))
+		if (bMenu.getBounds().contains(x, y)){
 			bMenu.setMouseOver(true);
-		else {
+	} else if(bPause.getBounds().contains(x,y)) {
+
+			bPause.setMouseOver(true);
+
+		}else {
 
 			if(displayTower != null) {
 				if(sellTower.getBounds().contains(x,y)) {
@@ -341,9 +349,11 @@ public class ActionBar extends Bar {
 	}
 
 	public void mousePressed(int x, int y) {
-		if (bMenu.getBounds().contains(x, y))
+		if (bMenu.getBounds().contains(x, y)) {
 			bMenu.setMousePressed(true);
-		else {
+		} else if (bPause.getBounds().contains(x,y)) {
+			bPause.setMousePressed(true);
+		}else {
 
 			if(displayTower != null) {
 				if(sellTower.getBounds().contains(x,y)) {
@@ -365,6 +375,7 @@ public class ActionBar extends Bar {
 
 	public void mouseReleased(int x, int y) {
 		bMenu.resetBooleans();
+		bPause.resetBooleans();
 
 		for (MyButton b : towerBtn)
 			b.resetBooleans();
