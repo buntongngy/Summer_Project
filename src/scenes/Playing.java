@@ -318,5 +318,7 @@ public class Playing extends GameScene implements SceneMethods {
 	}
 
 
-
+	public void removeOneLife() {
+		actionBar.removeLife();
+	}
 }

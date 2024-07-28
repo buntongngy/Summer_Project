@@ -114,7 +114,9 @@ public class ProjectileManager {
                         explosions.add(new Explosion(p.getPos()));
                         explodeOnEnemy(p);
                     }
-                } else {
+                } else if (isProjOutsideBound(p)){
+
+                    p.setActive(false);
 
                 }
             }
@@ -124,6 +126,22 @@ public class ProjectileManager {
                 e.update();
 
             }
+
+    }
+
+    private boolean isProjOutsideBound(Projectile p) {
+
+        if (p.getPos().x > 0) {
+            if (p.getPos().x <640) {
+                if (p.getPos().y >= 0) {
+                    if (p.getPos().y <= 800) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
 
     }
 

@@ -27,6 +27,8 @@ public class ActionBar extends Bar {
 	private boolean showTowerCost = false;
 	private int towerCostType;
 
+	private int lives = 25;
+
 	private DecimalFormat formatter ;
 
 	public ActionBar(int x, int y, int width, int height, Playing playing) {
@@ -85,12 +87,17 @@ public class ActionBar extends Bar {
 		
 		drawGoldAmount(g);
 
-		if(showTowerCost)
-		drawTowerCost(g);
+		if(showTowerCost) {
+		drawTowerCost(g); }
 
-		if(playing.isGamePause())
+		if(playing.isGamePause()) {
 			g.setColor(Color.GRAY);
-			g.drawString("Game Pause", 50,750);
+			g.drawString("Game Pause", 50,750); }
+
+		g.setColor(Color.RED);
+		g.drawString("Live: " + lives, 110, 750 );
+
+
 	}
 
 	private void drawTowerCost(Graphics g) {
@@ -281,6 +288,29 @@ public class ActionBar extends Bar {
 
 	}
 
+	public void addGold(int getReward) {
+
+		this.gold += getReward;
+
+	}
+
+	private boolean isEnoughGold(int towerType) {
+
+		return gold >= Constants.Towers.GetTowerCost(towerType);
+
+	}
+
+	public int getLive() {
+		return lives;
+	}
+
+	public void removeLife() {
+		lives--;
+		if (lives <=0 ) {
+			System.out.println("Game Over");
+		}
+	}
+
 	public void mouseClicked(int x, int y) {
 		if (bMenu.getBounds().contains(x, y)) {
 			SetGameState(MENU);
@@ -313,20 +343,6 @@ public class ActionBar extends Bar {
 				}
 				}
 		}
-
-	}
-
-
-
-	public void addGold(int getReward) {
-
-			this.gold += getReward;
-
-	}
-
-	private boolean isEnoughGold(int towerType) {
-
-		return gold >= Constants.Towers.GetTowerCost(towerType);
 
 	}
 
@@ -407,6 +423,7 @@ public class ActionBar extends Bar {
 		upgradeTower.resetBooleans();
 
 	}
+
 
 
 
