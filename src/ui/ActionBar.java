@@ -1,8 +1,5 @@
 package ui;
 
-import static main.GameStates.MENU;
-import static main.GameStates.SetGameState;
-
 import java.awt.*;
 import java.text.DecimalFormat;
 
@@ -11,7 +8,7 @@ import objects.Tower;
 import scenes.Playing;
 
 import static helpz.Constants.Towers;
-
+import static main.GameStates.*;
 
 
 public class ActionBar extends Bar {
@@ -27,7 +24,7 @@ public class ActionBar extends Bar {
 	private boolean showTowerCost = false;
 	private int towerCostType;
 
-	private int lives = 25;
+	private int lives = 1;
 
 	private DecimalFormat formatter ;
 
@@ -307,7 +304,7 @@ public class ActionBar extends Bar {
 	public void removeLife() {
 		lives--;
 		if (lives <=0 ) {
-			System.out.println("Game Over");
+			SetGameState(Game_Over);
 		}
 	}
 
@@ -424,7 +421,13 @@ public class ActionBar extends Bar {
 
 	}
 
+	public void resetEverything() {
 
+		lives = 25;
+		towerCostType = 0;
+		showTowerCost = false;
+		gold = 100;
+		selectedTower = displayTower = null;
 
-
+	}
 }

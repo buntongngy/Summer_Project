@@ -91,4 +91,12 @@ public class WaveManager {
         float tickLeft = waveTickLimit - waveTick;
         return tickLeft / 60.0f;
     }
+
+    public void reset() {
+        wave.clear();
+        createWave();
+        enemyIndex = waveIndex = waveTick = 0;
+        waveStartTimer = waveTickTimerOver = false;
+        enemySpawnTick = enemySpawnTickLimit;
+    }
 }

@@ -4,6 +4,7 @@ import main.Game;
 import ui.MyButton;
 
 import java.awt.*;
+import static main.GameStates.*;
 
 public class Gameover extends GameScene implements SceneMethods{
 
@@ -40,8 +41,30 @@ public class Gameover extends GameScene implements SceneMethods{
 
     }
 
+    private void replayGame() {
+
+        resetAll();
+        SetGameState(PLAYING);
+
+    }
+
+    private void resetAll() {
+        game.getPlaying().resetEverything();
+    }
+
     @Override
     public void mouseClicked(int x, int y) {
+
+        if(bMenu.getBounds().contains(x,y)) {
+
+            SetGameState(MENU);
+            resetAll();
+
+        } else if (bReplay.getBounds().contains(x,y)) {
+
+          replayGame();
+
+        }
 
     }
 

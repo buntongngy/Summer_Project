@@ -14,7 +14,7 @@ public class TowerManager {
     private Playing playing;
     private BufferedImage[] towerImg;
     private ArrayList<Tower> towers = new ArrayList<Tower>();
-    private int towerAcc = 0;
+    private int towerAmount = 0;
 
 
     public TowerManager(Playing playing) {
@@ -26,7 +26,7 @@ public class TowerManager {
     }
 
     public void addTower(Tower selectedTower, int xPos, int yPos) {
-        towers.add(new Tower(xPos,yPos,towerAcc++, selectedTower.getTowerType()));
+        towers.add(new Tower(xPos,yPos,towerAmount++, selectedTower.getTowerType()));
     }
 
     public void removeTower(Tower displayTower) {
@@ -115,6 +115,10 @@ public class TowerManager {
         return range < t.getRange();
     }
 
+    public void reset() {
+        towers.clear();
+        towerAmount = 0;
+    }
 
 
 }
