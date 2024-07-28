@@ -51,6 +51,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		case EDIT:
 			game.getEditor().mouseMoved(e.getX(), e.getY());
 			break;
+			case Game_Over:
+				game.getGameover().mouseMoved(e.getX(), e.getY());
+				break;
 		default:
 			break;
 		}
@@ -72,6 +75,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 			case EDIT:
 				game.getEditor().mouseClicked(e.getX(), e.getY());
 				break;
+				case Game_Over:
+					game.getGameover().mouseClicked(e.getX(), e.getY());
+					break;
 			default:
 				break;
 			}
@@ -93,6 +99,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		case EDIT:
 			game.getEditor().mousePressed(e.getX(), e.getY());
 			break;
+			case Game_Over:
+				game.getGameover().mousePressed(e.getX(), e.getY());
+				break;
 		default:
 			break;
 		}
@@ -113,6 +122,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		case EDIT:
 			game.getEditor().mouseReleased(e.getX(), e.getY());
 			break;
+			case Game_Over:
+				game.getGameover().mouseReleased(e.getX(), e.getY());
+				break;
 		default:
 			break;
 		}

@@ -6,10 +6,7 @@ import helpz.LoadSave;
 import inputs.KeyboardListener;
 import inputs.MyMouseListener;
 import managers.TileManager;
-import scenes.Editing;
-import scenes.Menu;
-import scenes.Playing;
-import scenes.Settings;
+import scenes.*;
 
 public class Game extends JFrame implements Runnable {
 
@@ -25,6 +22,7 @@ public class Game extends JFrame implements Runnable {
 	private Playing playing;
 	private Settings settings;
 	private Editing editing;
+	private Gameover gameover;
 
 	private TileManager tileManager;
 
@@ -59,6 +57,7 @@ public class Game extends JFrame implements Runnable {
 		playing = new Playing(this);
 		settings = new Settings(this);
 		editing = new Editing(this);
+		gameover = new Gameover(this);
 
 	}
 
@@ -161,5 +160,7 @@ public class Game extends JFrame implements Runnable {
 	public TileManager getTileManager() {
 		return tileManager;
 	}
+
+	public Gameover getGameover() {return gameover;}
 
 }
