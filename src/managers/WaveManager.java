@@ -47,6 +47,7 @@ public class WaveManager {
         return wave.get(waveIndex).getEnemyList().get(enemyIndex++);
     }
 
+    //Method to add more wave
     private void createWave() {
         wave.add(new Wave(new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0,0,0))));
         wave.add(new Wave(new ArrayList<>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0))));
